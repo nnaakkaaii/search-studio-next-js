@@ -1,23 +1,27 @@
 import 'date-fns';
 import React from 'react';
-import DateFnsUtils from '@date-io/date-fns';
-import jaLocale from "date-fns/locale/ja";
-import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {styled} from "@mui/system";
+import DatePicker from '@mui/lab/DatePicker';
+import {Button, TextField} from "@mui/material";
+import {CalendarPicker, LocalizationProvider, MobileDatePicker} from "@mui/lab";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import ja from "date-fns/locale/ja";
+import DateConvert from "../dateConvert";
+import {ExpandLess, ExpandMore} from "@mui/icons-material";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            color: "#5A4628",
-            marginLeft: 12,
-            paddingBottom: 8,
-        },
-        dateInput: {
-            color: '#5A4628',
-            borderColor: '#5A4628',
-            textAlign: 'center'
-        }
-    }));
+const MyButton = styled(Button)({
+    color: "#5A4628",
+    borderBottom: '1px solid #5A4628',
+    borderRadius: 0,
+    margin: '0 4px 8px',
+    padding: '4px 8px',
+})
+
+const MyCalendarPicker = styled(CalendarPicker)({
+    maxHeight: 330,
+    width: 280,
+    marginTop: -20,
+})
 
 interface SearchDatePickerProps {
     value: any;
@@ -25,21 +29,25 @@ interface SearchDatePickerProps {
 }
 
 export default function SearchDatePicker(props: SearchDatePickerProps) {
-    const classes = useStyles();
+    const [open, setOpen] = React.useState(false)
+
+    const onChange = () => {
+        setOpen(prevState => !prevState)
+    }
 
     return (
-            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={jaLocale}>
-                <DatePicker
-                    className={classes.root} disableToolbar variant="dialog" id="date-picker-inline"
-                    cancelLabel='キャンセル' okLabel='決定'
-                    format="yyyy/MM/dd" emptyLabel='日にちを選択'
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale={ja}>
+            <MyButton onClick={onChange}>
+                { props.value !== null ? DateConvert(props.value) : '日付を選択' }
+                { open ? <ExpandLess sx={{ml: '12px'}}/> : <ExpandMore sx={{ml: '12px'}}/> }
+            </MyButton>
+            <div style={open ? {} : {display: 'none'}}>
+                <MyCalendarPicker
+                    views={['day']}
                     minDate={new Date()}
                     maxDate={new Date().setMonth(new Date().getMonth() + 2)}
-                    value={props.value}
-                    inputProps={{className: classes.dateInput}}
-                    onChange={props.changeDate}
-                />
-            </MuiPickersUtilsProvider>
-
+                    date={props.value} onChange={props.changeDate} />
+            </div>
+        </LocalizationProvider>
     );
 }

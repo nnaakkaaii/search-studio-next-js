@@ -1,24 +1,18 @@
 import React from 'react';
-import {createStyles, makeStyles} from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import {Button }from "@mui/material";
+import {styled} from "@mui/system";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        btn: {
-            color: '#5A4628',
-            fontWeight: 'bold',
-            minWidth: 20,
-            padding: '0 6px'
-        }
-    }));
+const MyButton = styled(Button)({
+    color: '#5A4628',
+    fontWeight: 'bold',
+    minWidth: 20,
+    padding: '0 6px'
+})
 
 export default function BoldButton(props: {label: any, onClick: () => void}) {
-    const classes = useStyles();
-
     return (
-        <Button onClick={props.onClick} className={classes.btn}>
+        <MyButton onClick={props.onClick}>
             {props.label}
-        </Button>
-
+        </MyButton>
     )
 }

@@ -1,27 +1,12 @@
 import React from 'react';
-import {createStyles, makeStyles} from "@material-ui/core/styles";
-import Select from "@material-ui/core/Select";
-import {FormControl, InputLabel} from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {styled} from "@mui/system";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        formControl: {
-            margin: '0 4px',
-            minWidth: 120,
-        },
-        label: {
-            color: '#5A4628'
-        },
-        selectEmpty: {
-            color: "#5A4628",
-            fontSize: 14,
-            padding: '2px 7px'
-        },
-        menuPaper: {
-            maxHeight: 300
-        }
-    }));
+const MySelect = styled(Select)({
+    color: "#5A4628",
+    fontSize: 14,
+    padding: '2px 7px',
+})
 
 interface SelectOptionProps {
     label?: any,
@@ -36,21 +21,21 @@ interface SelectOptionProps {
 }
 
 export default function SelectOption(props: SelectOptionProps) {
-    const classes = useStyles();
     const {label, options, nullIndex, unit, value, min, max, anotherValue, onChange} = props;
 
     return (
-        <FormControl className={classes.formControl}>
+        <FormControl variant='standard' sx={{m: '0 4px', minWidth: 120}}>
             {
-                label && <InputLabel shrink className={classes.label}>{label}</InputLabel>
+                label && <InputLabel shrink sx={{color: '#5A4628'}}>{label}</InputLabel>
             }
-            <Select
+            <MySelect
                 value={value ? value : options[nullIndex]}
-                onChange={onChange} displayEmpty className={classes.selectEmpty}
-                MenuProps={{ classes: { paper: classes.menuPaper } }}>
+                onChange={onChange} displayEmpty
+                MenuProps={{ PaperProps: { style: {maxHeight: 300} } }}
+            >
                 {
                     options.map((option: any, index) =>
-                        <MenuItem value={option} key={index}
+                        <MenuItem value={option} key={index} sx={{fontSize: 14, color: '#5A4628'}}
                                   disabled={
                                       index !== nullIndex && anotherValue &&
                                       min  ? option >= anotherValue
@@ -60,7 +45,7 @@ export default function SelectOption(props: SelectOptionProps) {
                         </MenuItem>
                     )
                 }
-            </Select>
+            </MySelect>
         </FormControl>
     );
 }

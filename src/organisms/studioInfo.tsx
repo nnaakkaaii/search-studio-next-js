@@ -1,20 +1,6 @@
 import React from "react";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
-import {Typography} from "@material-ui/core";
 import BoldTypography from "../atoms/boldTypography";
-
-const useStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            padding: 24,
-            color: '#5A4628'
-        },
-        flex: {
-            display: 'flex',
-            flexWrap: 'wrap'
-        }
-    })
-);
+import {Typography} from "@mui/material";
 
 export interface StudioInfoProps {
     intro: string,
@@ -33,19 +19,17 @@ export interface StudioInfoProps {
 }
 
 function ContentTypography(props: {children: any}) {
-    return <Typography variant={'body2'} style={{paddingLeft: 12}}>
+    return <Typography variant={'body2'} sx={{pl: 12}}>
         {props.children}
     </Typography>
 }
 
 export default function StudioInfo(props: StudioInfoProps) {
-    const classes = useStyles();
-
     return (
-        <div className={classes.root}>
+        <div style={{padding: 24, color: '#5A4628'}}>
             <Typography variant={'body2'}>{props.intro}</Typography>
             <BoldTypography sub margin={'16px 0 0'}>スタジオ設備</BoldTypography>
-            <div className={classes.flex}>
+            <div style={{display: 'flex', flexWrap: 'wrap'}}>
                 {
                     props.facilities.map((facility) => (
                         <ContentTypography key={facility.name}>{facility.name}</ContentTypography>

@@ -1,6 +1,7 @@
 import {useRouter} from 'next/router';
 import {prefItem} from "./itemsAndOptions/prefItems";
 import {lineItem} from "./itemsAndOptions/lineItems";
+import {useState} from "react";
 
 function unixToDate(props: {unix: string[], match: boolean}) {
     const start = new Date(Number(props.unix[0]) * 1000);
@@ -21,65 +22,91 @@ function unixToDate(props: {unix: string[], match: boolean}) {
     )
 }
 
-export const FromQuery = () => {
-    const search = useRouter().query.toString();
-    const query = new URLSearchParams(search);
+function getAsArray(value:string|string[]|undefined):string[] {
+    if(Array.isArray(value)){
+        return value[0].split(',');
+    } else if(value !== undefined){
+    return value.split(',')
+    } else {
+        return []
+    }
+}
 
-    const prefectureQuery: string|null = query.get('prefecture_name');
-    const cityQuery: string|null = query.get('city_name');
-    const lineQuery: string|null = query.get('line_name');
-    const stationQuery: string|null = query.get('station_name');
+function getAsString(value:string|string[]|undefined):string {
+    if(Array.isArray(value)){
+        return value[0];
+    } else if(value !== undefined){
+        return value
+    } else {
+        return ''
+    }
+}
+
+function getAsNumber(value:string|string[]|undefined):number|null {
+    if(Array.isArray(value)){
+        return Number(value[0]);
+    } else if(value !== undefined){
+        return Number(value)
+    } else {
+        return null
+    }
+}
+
+export const FromQuery = () => {
+    const query = useRouter().query;
+
+    const prefectureQuery: string[] = getAsArray(query.prefecture_name);
+    const cityQuery: string[] = getAsArray(query.city_name);
+    const lineQuery: string[] = getAsArray(query.line_name);
+    const stationQuery: string[] = getAsArray(query.station_name);
+    const studioName: string = getAsString(query.studio_name);
+    const areaMin: number|null = getAsNumber(query.area_min);
+    const areaMax: number|null = getAsNumber(query.area_max);
+    const peopleMin: number|null = getAsNumber(query.people_min);
+    const peopleMax: number|null = getAsNumber(query.people_max);
+    const dateQuery: string = getAsString(query.date);
+    const fromStation: number|null = getAsNumber(query.from_station_max);
+    const priceMin: number|null = getAsNumber(query.price_min);
+    const priceMax: number|null = getAsNumber(query.price_max);
+    const freeCancel: boolean = query.free_cancel === 'true';
+    const halfHourSlot: boolean = query.half_hour_slot === 'true';
+    const fromHalfHour: boolean = query.from_half_hour === 'true';
+    const reservation: string[] = getAsArray(query.reservation);
+    const studioFacility: string[] = getAsArray(query.studio_facility);
+    const mirrorMin: number|null = getAsNumber(query.mirror_min);
+    const mirrorMax: number|null = getAsNumber(query.mirror_max);
+    const floorMaterial: string[] = getAsArray(query.floor_material);
+    const roomFacility: string[] = getAsArray(query.room_facility);
+
+
     const prefecture: {name: string, id: string}[] = [];
     const city: {name: string, id: string}[] = [];
     const line: {name: string, id: string}[] = [];
     const station: {name: string, id: string}[] = [];
-    const studioName: string|null = query.get('studio_name');
-    const areaMin: number|null = Number(query.get('area_min'));
-    const areaMax: number|null = Number(query.get('area_max'));
-    const peopleMin: number|null = Number(query.get('people_min'));
-    const peopleMax: number|null = Number(query.get('people_max'));
-    const dateQuery: string|null = query.get('date');
-    const date: any[] = [];
-    const dateMatch: boolean = date ? date.includes(' ') : false;
-    const fromStation: number|null = Number(query.get('from_station_max'));
-    const priceMin: number|null = Number(query.get('price_min'));
-    const priceMax: number|null = Number(query.get('price_max'));
-    const freeCancel: boolean = query.get('free_cancel') === 'true';
-    const halfHourSlot: boolean = query.get('half_hour_slot') === 'true';
-    const fromHalfHour: boolean = query.get('from_half_hour') === 'true';
-    const reservationQuery: string|null = query.get('reservation');
-    const reservation: string[] = reservationQuery ? reservationQuery.split(',') : [];
-    const studioFacilityQuery: string|null = query.get('studio_facility');
-    const studioFacility: string[] = studioFacilityQuery ? studioFacilityQuery.split(',') : [];
-    const mirrorMin: number|null = Number(query.get('mirror_min'));
-    const mirrorMax: number|null = Number(query.get('mirror_max'));
-    const floorMaterialQuery: string|null = query.get('floor_material');
-    const floorMaterial: string[] = floorMaterialQuery ? floorMaterialQuery.split(',') : [];
-    const roomFacilityQuery: string|null = query.get('room_facility');
-    const roomFacility: string[] = roomFacilityQuery ? roomFacilityQuery.split(',') : [];
+    const date: {date: Date, startTime: string|null, endTime: string|null, matchTime: boolean}[] = [];
+    const dateMatch: boolean = dateQuery.includes(' ');
 
     prefItem.map((item) =>
-        prefectureQuery && prefectureQuery.split(',').map((id) => id === item.pref.id).includes(true) ?
+        prefectureQuery && prefectureQuery.map((id) => id === item.pref.id).includes(true) ?
             prefecture.push(item.pref)
             :
             item.cities.map((c) =>
-                cityQuery && cityQuery.split(',').map((id) => id === c.id).includes(true) &&
-                    city.push(c)
+                cityQuery && cityQuery.map((id) => id === c.id).includes(true) && city.push(c)
             )
     );
 
     lineItem.map((item) =>
-        lineQuery && lineQuery.split(',').map((id) => id === item.line.id).includes(true) ?
+        lineQuery && lineQuery.map((id) => id === item.line.id).includes(true) ?
             line.push(item.line)
             :
             item.stations.map((s) =>
-                stationQuery && stationQuery.split(',').map((id) => id === s.id).includes(true) &&
+                    stationQuery && stationQuery.map((id) => id === s.id).includes(true) &&
                     !station.map((item) => item.id).includes(s.id) && station.push(s)
                 )
 
     );
 
-    dateQuery && dateQuery.split(/,|\s/).map((item) =>
+    dateQuery !== '' && dateQuery.split(/,|\s/).map((item) =>
         date.push(unixToDate({unix: item.split(/and|or/), match: item.includes('and')}))
     );
 

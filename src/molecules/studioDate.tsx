@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {dateChipState, dateMatchState} from "../atom";
 import StudioDateButton from "./studioDateButton";

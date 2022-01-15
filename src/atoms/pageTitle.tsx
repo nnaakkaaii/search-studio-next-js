@@ -1,4 +1,4 @@
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 
 interface PageTitleProps {
     children: any,
@@ -10,7 +10,7 @@ export default function PageTitle(props: PageTitleProps) {
     return (
         <Typography variant={'h6'}　
                     align={props.center ? 'center' : 'left'}
-                    style={{fontWeight: 'bold', margin: props.margin}}>
+                    sx={{fontWeight: 'bold', m: props.margin}}>
             {props.children}
         </Typography>
     );

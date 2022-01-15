@@ -1,39 +1,26 @@
 import React, {useEffect} from "react";
-import {Paper} from "@material-ui/core";
-import {makeStyles, createStyles} from "@material-ui/core/styles";
 import StudioQueryChip from "../molecules/studioQueryChip";
 import OutlineButton from "../atoms/outlineButton";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {dateOpenState, detailOpenState, placeOpenState, spaceOpenState, studioSearchPaperOpenState} from "../atom";
 import BoldTypography from "../atoms/boldTypography";
 import BlueButton from "../atoms/blueButton";
+import {styled} from "@mui/system";
+import {Paper} from "@mui/material";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        paper: {
-            color: "#5A4628",
-            margin: '0 auto 8px',
-            padding: '4px 6px 2px 8px',
-            minWidth: 240,
-            maxWidth: 360,
-            height: 34,
-            display: 'flex',
-            alignItems: 'center',
-            boxShadow:'4px 4px 4px #F9F5F0',
-        },
-        content: {
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center'
-        },
-        typography: {
-            minWidth: 60,
-        }
-    })
-);
+const MyPaper = styled(Paper)({
+    color: "#5A4628",
+    margin: '0 auto 8px',
+    padding: '4px 6px 2px 8px',
+    minWidth: 240,
+    maxWidth: 360,
+    height: 34,
+    display: 'flex',
+    alignItems: 'center',
+    boxShadow:'1px 4px 4px #F9F5F0',
+})
 
 export default function StudioQueryPaper(props: {isWide?: boolean}) {
-    const classes = useStyles();
     const {isWide} = props;
     const [open, setOpen] = useRecoilState(studioSearchPaperOpenState);
     const placeOpen = useRecoilValue(placeOpenState);
@@ -54,9 +41,9 @@ export default function StudioQueryPaper(props: {isWide?: boolean}) {
     };
 
     return (
-        <Paper className={classes.paper}>
-            <div className={classes.content}>
-                <div className={classes.typography}>
+        <MyPaper>
+            <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
+                <div style={{minWidth: 60}}>
                     <BoldTypography sub center>検索条件</BoldTypography>
                 </div>
                 <StudioQueryChip/>
@@ -66,6 +53,6 @@ export default function StudioQueryPaper(props: {isWide?: boolean}) {
                         : <BlueButton padding={0} margin={4} onClick={handleClick}>変更</BlueButton>)
                 }
             </div>
-        </Paper>
+        </MyPaper>
     );
 }

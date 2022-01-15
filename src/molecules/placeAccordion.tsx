@@ -1,61 +1,62 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import MuiAccordion from '@material-ui/core/Accordion';
-import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
-import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {styled} from "@mui/system";
+import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
+import MuiAccordionSummary, {
+    AccordionSummaryProps,
+} from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import {ExpandMore} from "@mui/icons-material";
+import {Typography} from "@mui/material";
 
-const Accordion = withStyles({
-    root: {
-        boxShadow: 'none',
-        '&:before': {
-            display: 'none',
-        },
+
+const Accordion = styled((props: AccordionProps) => (
+    <MuiAccordion elevation={0} square {...props} />
+))(() => ({
+    padding: 0,
+    boxShadow: 'none',
+    '&:before': {
+        display: 'none',
+    },
+    '&.Mui-expanded': {
+        margin: 0,
+    },
+    '&:last-child': {
+        borderBottom: '1px solid #D7D2C8',
         '&$expanded': {
-            margin: 'auto',
-        },
-        '&:last-child': {
-            borderBottom: '1px solid #D7D2C8',
-            '&$expanded': {
-                borderBottom: 0
-            },
+            borderBottom: 0
         },
     },
     expanded: {},
-})(MuiAccordion);
+}));
 
-const AccordionSummary = withStyles({
-    root: {
+const AccordionSummary = styled((props: AccordionSummaryProps) => (
+    <MuiAccordionSummary expandIcon={<ExpandMore/>}{...props}/>))(() => ({
         fontSize: '14px',
         color: '#5A4628',
         backgroundColor: '#F9F5F0',
         borderTop: '1px solid #D7D2C8',
         minHeight: 20,
-        '&$expanded': {
-            minHeight: 20
+        padding: '4px 16px',
+        '&.Mui-expanded': {
+            minHeight: 20,
         },
-    },
-    content: {
-        margin: 0,
-        '&$expanded': {
+        '&.MuiAccordionSummary-expandIcon': {
+            color: '#5A4628',
+            padding: '5px',
+            margin: '0 -5px 0 0'
+        },
+        '& .MuiAccordionSummary-content': {
             margin: 0,
+            '&$expanded': {
+                margin: 0,
+            },
         },
-    },
-    expandIcon: {
-        color: '#5A4628',
-        padding: '5px',
-        margin: '0 -5px 0 0'
-    },
-    expanded: {},
-})(MuiAccordionSummary);
+}));
 
-const AccordionDetails = withStyles({
-    root: {
-        padding: 0,
-        minHeight: 16,
-    },
-})(MuiAccordionDetails);
+const AccordionDetails = styled(MuiAccordionDetails)(() => ({
+    padding: 0,
+    minHeight: 16,
+}));
 
 interface PlaceAccordionProps {
     children: React.ReactNode;
@@ -65,13 +66,13 @@ interface PlaceAccordionProps {
 export default function PlaceAccordion(props: PlaceAccordionProps) {
     const [expanded, setExpanded] = React.useState<string | false>();
 
-    const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, newExpanded: boolean) => {
-        setExpanded(newExpanded ? panel : false);
-    };
+    const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+            setExpanded(newExpanded ? panel : false);
+        };
 
     return (
             <Accordion square expanded={expanded === `panel-${props.area}`} onChange={handleChange(`panel-${props.area}`)}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}
+                <AccordionSummary expandIcon={<ExpandMore/>}
                                   aria-controls={`panel-${props.area}-content`}
                                   id={`panel-${props.area}-header`}>
                     <Typography variant='subtitle2'>{props.area}</Typography>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {AppBar, Tab, Tabs} from "@material-ui/core";
+import {AppBar, Tab, Tabs} from "@mui/material";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -26,14 +26,11 @@ function a11yProps(index: number) {
 
 interface TabBarProps {
     labels: string[];
-    divStyle?: any;
-    barStyle?: any;
-    barSStyle?: any;
-    tabsStyle?: any;
+    barTop?: any;
+    white?: boolean;
     tabFontSize?: number;
     tabFlexGrow: number;
     tabMinHeight: number;
-    contentStyle?: any;
     children: React.ReactNode[];
 }
 
@@ -45,27 +42,25 @@ export default function MenuTab(props: TabBarProps) {
     };
 
     return (
-        <div className={props.divStyle}>
-            <AppBar className={props.barStyle} style={props.barSStyle}>
-                <Tabs className={props.tabsStyle}
+        <>
+            <AppBar position='sticky' sx={{top: props.barTop}}>
+                <Tabs sx={{backgroundColor: props.white ? '#FFF' : '#F9F5F0', color: '#5A4628', minHeight: 24}}
                       TabIndicatorProps={{style: {backgroundColor: '#1D356A'}}}
                       value={value} onChange={handleChange} aria-label="menuTabs">
                     {
                         props.labels.map((label, index) =>
                             <Tab label={label} key={index} {...a11yProps(index)} wrapped
-                                 style={{fontSize: props.tabFontSize, flexGrow: props.tabFlexGrow, minHeight: props.tabMinHeight,
-                                     fontWeight: 'bold', padding: 6, maxWidth: 600}}/>
+                                 sx={{fontSize: props.tabFontSize, flexGrow: props.tabFlexGrow, minHeight: props.tabMinHeight,
+                                     fontWeight: 'bold', p: 0, maxWidth: 600}}/>
                         )
                     }
                 </Tabs>
             </AppBar>
-            <div className={props.contentStyle}>
-                {
-                    props.children.map((child,index) =>
-                        <TabPanel value={value} index={index} key={index}>{child}</TabPanel>
-                    )
-                }
-            </div>
-        </div>
+            {
+                props.children.map((child,index) =>
+                    <TabPanel value={value} index={index} key={index}>{child}</TabPanel>
+                )
+            }
+        </>
     );
 }

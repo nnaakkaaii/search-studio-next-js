@@ -1,28 +1,20 @@
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import {Typography} from "@material-ui/core";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {styled} from "@mui/system";
+import {FormControl, FormControlLabel, Radio, RadioGroup, Typography} from "@mui/material";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        content: {
-            color: "#5A4628",
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
-        root: {
-            padding: 4,
-        },
-        label: {
-            margin: '0 4px',
-            '&.MuiTypography' :{
-                fontSize: 10
-            }
-        }
-    }));
+
+const RadioDiv = styled('div')({
+    color: "#5A4628",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+})
+
+const MyFormControlLabel = styled(FormControlLabel)({
+    margin: '0 4px',
+    '&.MuiTypography': {
+        fontSize: 10
+    }
+})
 
 interface SearchRadioProps {
     beforeTyp?: string,
@@ -33,21 +25,19 @@ interface SearchRadioProps {
 }
 
 export default function SearchRadio(props: SearchRadioProps) {
-    const classes = useStyles()
-
     return (
-        <div className={classes.content}>
+        <RadioDiv>
             {
                 props.beforeTyp && <Typography variant={'caption'}>{props.beforeTyp}</Typography>
             }
-            <FormControl component="fieldset" style={{marginRight: 8}}>
+            <FormControl component="fieldset" sx={{mr: '8px'}}>
                 <RadioGroup row aria-label="dateMatch" name="dateMatch" value={props.value} onChange={props.handleChange}>
                     {
                         props.options.map((option, index) =>
-                            <FormControlLabel key={index} value={option}
-                                              control={<Radio className={classes.root} color={'primary'} size={'small'}/>}
-                                              label={<Typography variant="body2">{option}</Typography>}
-                                              className={classes.label}
+                            <MyFormControlLabel
+                                key={index} value={option}
+                                control={<Radio sx={{p: '4px'}} color='primary' size='small'/>}
+                                label={<Typography variant="body2">{option}</Typography>}
                             />
                         )
                     }
@@ -56,6 +46,6 @@ export default function SearchRadio(props: SearchRadioProps) {
             {
                 props.afterTyp && <Typography variant={'caption'}>{props.afterTyp}</Typography>
             }
-        </div>
+        </RadioDiv>
     );
 }

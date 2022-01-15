@@ -1,32 +1,10 @@
 import React from "react";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
 import ImgCarousel from "../atoms/imgCarousel";
 import SlotTable from "../molecules/slotTable";
 import SlotTime from "../molecules/slotTime";
 import VacantRoomTop from "../molecules/vacantRoomTop";
 import StudioReserveButton from "../atoms/studioReserveButton";
 import SearchChip from "../atoms/searchChip";
-
-const useStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            padding: '24px',
-            color: '#5A4628'
-        },
-        flex: {
-            display: 'flex',
-            marginBottom: 4
-        },
-        reserveBtn: {
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: '#F9F5F0',
-            backgroundColor: '#1D356A',
-            display: 'flex',
-            margin: 'auto',
-            padding: '6px 12px'
-        }
-    }))
 
 type Room = {
             "room_name": string,
@@ -64,20 +42,19 @@ type Room = {
         }
 
 export default function VacantRoom(props: {room: Room}) {
-    const classes = useStyles();
     const {room} = props;
     const items = [...room.room_facilities, ...room.amenities];
 
     return (
-        <div className={classes.root}>
+        <div style={{padding: '24px', color: '#5A4628'}}>
             <VacantRoomTop name={room.room_name} area={room.floor_area}
                            minPeople={room.min_people} maxPeople={room.max_people} floor={room.floor_material}/>
-            <div className={classes.flex}>
+            <div style={{display: 'flex', marginBottom: 4}}>
                 {
                     items.map((item, index) => <SearchChip key={index} label={item.name}/>)
                 }
             </div>
-            <ImgCarousel img={room.room_img}/>
+            <ImgCarousel img={room.room_img} indicators/>
             <SlotTable slots={room.slots}/>
             <SlotTime minutes={room.min_reserve_minutes}/>
             <div style={{display: 'flex'}}>

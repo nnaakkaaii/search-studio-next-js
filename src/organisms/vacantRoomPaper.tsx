@@ -1,12 +1,12 @@
 import React from "react";
 import VacantRoom from "../organisms/vacantRoom";
-import {Paper} from "@material-ui/core";
+import {Paper} from "@mui/material";
 import BoldTypography from "../atoms/boldTypography";
 import {Room} from "../seachResultType";
 
 export default function VacantRoomPaper(props: {rooms: Room[], height: number}) {
     return (
-        <Paper elevation={0} style={{flexGrow: 1, minWidth: '50%', margin: 12}}>
+        <Paper elevation={0} sx={{flexGrow: 1, minWidth: '50%', m: '0 12px 12px'}}>
             <div style={{margin: '8px 0', overflow: 'scroll', height: props.height - 216}}>
                 <BoldTypography center margin={4}>?</BoldTypography>
                 {

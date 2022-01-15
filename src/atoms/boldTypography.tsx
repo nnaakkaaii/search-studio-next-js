@@ -1,4 +1,4 @@
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 
 interface BoldTypographyProps {
     children: any,
@@ -11,7 +11,7 @@ export default function BoldTypography(props: BoldTypographyProps) {
     return (
         <Typography variant={props.sub ? 'subtitle2' : 'subtitle1'}
                     align={props.center ? 'center' : 'left'}
-                    style={{color: "#5A4628", fontWeight: 'bold', margin: props.margin}}>
+                    sx={{color: "#5A4628", fontWeight: 'bold', m: props.margin}}>
             {props.children}
         </Typography>
     );

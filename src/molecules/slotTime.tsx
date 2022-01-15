@@ -1,4 +1,4 @@
-import {AccessTime} from "@material-ui/icons";
+import {AccessTime} from "@mui/icons-material";
 import SmallTypography from "../atoms/smallTypography";
 
 export default function SlotTime(props: {minutes: number}) {

@@ -1,4 +1,4 @@
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 
 interface SmallTypographyProps {
     children: any,
@@ -11,9 +11,9 @@ export default function SmallTypography(props: SmallTypographyProps) {
     return (
         <Typography variant={'caption'}
                     align={props.center ? 'center' : 'left'}
-                    style={
-                        props.bold ? {color: "#5A4628", fontWeight: 'bold', margin: props.margin}
-                            : {color: "#5A4628", margin: props.margin}
+                    sx={
+                        props.bold ? {color: "#5A4628", fontWeight: 'bold', m: props.margin}
+                            : {color: "#5A4628", m: props.margin}
                     }>
             {props.children}
         </Typography>

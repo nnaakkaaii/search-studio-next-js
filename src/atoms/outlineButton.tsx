@@ -1,16 +1,13 @@
 import React from 'react';
-import {createStyles, makeStyles} from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import {Button} from "@mui/material";
+import {styled} from "@mui/system";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        btn: {
-            borderColor: '#D7D2C8',
-            color: '#5A4628',
-            padding: 0,
-            margin: 4
-        }
-    }));
+const MyButton = styled(Button)({
+    borderColor: '#D7D2C8',
+    color: '#5A4628',
+    padding: 0,
+    margin: 4
+})
 
 interface SearchOutlineButtonProps {
     children: string;
@@ -19,11 +16,9 @@ interface SearchOutlineButtonProps {
 }
 
 export default function OutlineButton(props: SearchOutlineButtonProps) {
-    const classes = useStyles();
-
     return (
-        <Button onClick={props.onClick} disabled={props.disabled} className={classes.btn} variant="outlined">
+        <MyButton onClick={props.onClick} disabled={props.disabled} variant="outlined">
             {props.children}
-        </Button>
+        </MyButton>
     )
 }

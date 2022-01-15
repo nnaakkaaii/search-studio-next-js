@@ -54,7 +54,7 @@ export default function DetailDialog() {
     };
 
     return (
-        <StudioDialog open={detailOpen} handleCancel={detailCancel} handleOk={detailOk} padding={isMedium ? '24px 36px' : 20}>
+        <StudioDialog open={detailOpen} handleCancel={detailCancel} handleOk={detailOk} padding={isMedium ? '24px 36px' : '20px'}>
             <div style={{display:'flex'}}>
                 <BoldTypography margin={'0 24px 0 0'}>駅から徒歩</BoldTypography>
                 <SelectOption value={fromStation} options={fromStationOptions} nullIndex={0} unit={'分以内'} onChange={changeFromStation}/>

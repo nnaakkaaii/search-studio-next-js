@@ -1,5 +1,5 @@
 import React from "react";
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 import StudioSpaceButton from "./studioSpaceButton";
 
 export default function StudioSpace(props: {isWide?: boolean}) {

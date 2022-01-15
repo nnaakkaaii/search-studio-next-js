@@ -4,27 +4,22 @@ import {reserveOptions} from "../itemsAndOptions/detailOptions";
 import {FromQuery} from "../fromQuery";
 import SearchChip from "../atoms/searchChip";
 import DateConvert from "../dateConvert";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {styled} from "@mui/system";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        chip: {
-            display: 'flex',
-            padding: 2,
-            overflow: 'scroll',
-            width: '100%',
-            margin: '0 4px'
-        }
-    })
-);
+const ChipWrapper = styled('div')({
+    display: 'flex',
+    padding: 2,
+    overflow: 'scroll',
+    width: '100%',
+    margin: '0 4px'
+})
 
 export default function StudioQueryChip() {
-    const classes = useStyles();
     const query = FromQuery();
     const placeQuery = [...query.prefecture, ...query.city, ...query.line, ...query.station];
 
     return (
-        <div className={classes.chip}>
+        <ChipWrapper>
             {placeQuery.map((item) => item && <SearchChip key={item.id} label={item.name}/>)}
             <SearchChip label={query.studioName}/>
             <SearchChip label={RangeLabel({min: query.areaMin, max: query.areaMax, unit: 'm²'})}/>
@@ -45,6 +40,6 @@ export default function StudioQueryChip() {
             <SearchChip pre={'鏡'} label={RangeLabel({min: query.mirrorMin, max: query.mirrorMax, unit: 'm'})}/>
             {query.floorMaterial.map((item) => item && <SearchChip key={item} label={item}/>)}
             {query.roomFacility.map((item) => item && <SearchChip key={item} label={item}/>)}
-        </div>
+        </ChipWrapper>
     );
 }

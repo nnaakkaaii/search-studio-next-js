@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Checkbox} from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import MuiFormControlLabel from "@material-ui/core/FormControlLabel";
+import {Checkbox, FormControlLabel} from "@mui/material";
+import {styled} from "@mui/system";
 
-const FormControlLabel = withStyles({
-    root: {
-        margin: 0
-    },
-    label: {
+const MyFormControlLabel = styled(FormControlLabel)({
+    margin: 0,
+    padding: 0,
+    '& .MuiFormControlLabel-label': {
         color: '#5A4628',
         fontSize: 14
     }
-})(MuiFormControlLabel);
+})
 
 function count (str:string) {
     let count:number = 0
@@ -51,17 +49,17 @@ export default function SearchCheckbox(props: SearchCheckboxProps) {
     };
 
     return (
-        <FormControlLabel onClick={parent ? (event) => event.stopPropagation() : ()=>{}}
-                          onFocus={parent ? (event) => event.stopPropagation() : ()=>{}}
-                          style={
-                              parent ? {} :
-                                  (child && count(itemName) < 5) ? {width: 100}
-                                      : (count(itemName) < 8 ? {width: 140} : {width: 280})
-                          }
-                          control={
-                              <Checkbox style={{padding: 4}} size='small' checked={checked}
-                                        onChange={handleChange} value={item} color="primary"/>
-                          }
-                          label={itemName}/>
+        <MyFormControlLabel
+            onClick={parent ? (event) => event.stopPropagation() : ()=>{}}
+            onFocus={parent ? (event) => event.stopPropagation() : ()=>{}}
+            style={
+                parent ? {} : (child && count(itemName) < 5) ? {width: 100}
+                    : (count(itemName) < 8 ? {width: 140} : {width: 280})
+            }
+            control={
+                <Checkbox sx={{p: '4px'}} size='small' checked={checked}
+                          onChange={handleChange} value={item} color="primary"/>
+            }
+            label={itemName}/>
     );
 }

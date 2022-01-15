@@ -1,31 +1,24 @@
 import React from 'react';
-import {createStyles, makeStyles} from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import { styled } from '@mui/system';
+import {Button} from "@mui/material";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        btn: {
-            borderColor: '#D7D2C8',
-            color: '#9B8C7D',
-            backgroundColor: '#fff',
-            margin: '0 2%',
-            width: '96%',
-        },
-        btnChip: {
-            borderColor: '#D7D2C8',
-            backgroundColor: '#fff',
-            justifyContent: 'start',
-            padding: '0 4px',
-            margin: '0 2%',
-            width: '96%',
-        },
-        wrapChip: {
-            overflow: 'scroll',
-            display: 'flex',
-            padding: 4
-        }
-    })
-);
+const MyButton = styled(Button)({
+    borderColor: '#D7D2C8',
+    color: '#9B8C7D',
+    backgroundColor: '#fff',
+    margin: '0 2%',
+    width: '96%',
+    '&:hover': {
+        borderColor: '#9B8C7D',
+        backgroundColor: '#fff',
+    }
+})
+
+const ChipWrapDiv = styled('div')({
+    overflow: 'scroll',
+    display: 'flex',
+    padding: 4
+})
 
 interface SearchCardButtonProps {
     dialogOpen: () => void;
@@ -35,16 +28,14 @@ interface SearchCardButtonProps {
 }
 
 export default function SearchPaperButton(props: SearchCardButtonProps) {
-    const classes = useStyles();
-
     return (
-        <Button variant="outlined" className={props.chipDisplay ? classes.btnChip : classes.btn}
+        <MyButton variant="outlined" sx={props.chipDisplay ? {justifyContent: 'start', p: '0 4px'} : {}}
                 onClick={props.dialogOpen}>
             {
                 props.chipDisplay ?
-                    <div className={classes.wrapChip}>{props.children}</div>
+                    <ChipWrapDiv>{props.children}</ChipWrapDiv>
                     : props.label + 'を選択'
             }
-        </Button>
+        </MyButton>
     );
 }

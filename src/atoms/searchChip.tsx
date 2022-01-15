@@ -1,17 +1,15 @@
-import {withStyles} from "@material-ui/core/styles";
-import MuiChip from "@material-ui/core/Chip";
+import {styled} from "@mui/system";
+import {Chip} from "@mui/material";
 
-const Chip = withStyles({
-    root: {
-        textTransform: 'none',
-        color: '#5A4628',
-        backgroundColor: '#e7e1d8',
-        margin: '1px 2px'
-    },
-    deleteIcon: {
+const MyChip = styled(Chip)({
+    textTransform: 'none',
+    color: '#5A4628',
+    backgroundColor: '#e7e1d8',
+    margin: '1px 2px',
+    '& .MuiChip-deleteIcon': {
         color: '#9B8C7D'
     }
-})(MuiChip);
+})
 
 interface SearchChipProps {
     label: any|null,
@@ -25,7 +23,7 @@ export default function SearchChip(props: SearchChipProps) {
 
     return (
         label ?
-            <Chip size='small' onDelete={onDelete} label={`${pre ? pre : ''}${label}${after ? after : ''}`}/>
+            <MyChip size='small' onDelete={onDelete} label={`${pre ? pre : ''}${label}${after ? after : ''}`}/>
             : null
     );
 }

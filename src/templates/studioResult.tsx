@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import StudioResultCard from "../organisms/studioResultCard";
 import {initialSearchResult, SearchResult} from "../seachResultType";
 import {useMedia} from "use-media";
-import {useSetRecoilState} from "recoil";
+import {useRecoilValue, useSetRecoilState} from "recoil";
 import {
     areaChipState, cityChipState, dateChipState, dateMatchState, detailItemChipState,
     fromStationChipState, lineChipState, mirrorChipState, peopleChipState,
@@ -17,7 +17,6 @@ import BoldTypography from "../atoms/boldTypography";
 import StudioQueryChange from "../organisms/studioQueryChange";
 
 export default function StudioResult() {
-    const search = useRouter().query.toString();
     const isWide = useMedia({ minWidth: "800px" });
     const [searchResult, setSearchResult] = useState<SearchResult>(initialSearchResult);
 
@@ -36,6 +35,7 @@ export default function StudioResult() {
     const setMirrorChip = useSetRecoilState(mirrorChipState);
     const setDetailItemChip = useSetRecoilState(detailItemChipState);
 
+    const search = useRouter().asPath.substring(8);
     const query = FromQuery();
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function StudioResult() {
         setCityChip(query.city);
         setLineChip(query.line);
         setStationChip(query.station);
-        setStudioName(query.studioName ? query.studioName : '');
+        setStudioName(query.studioName);
         setAreaChip({min: query.areaMin, max: query.areaMax});
         setPeopleChip({min: query.peopleMin, max: query.peopleMax});
         setDateChip(query.date);
@@ -61,7 +61,9 @@ export default function StudioResult() {
         query.freeCancel && setDetailItemChip(prevState => [...prevState, 'キャンセル無料期間あり']);
         query.halfHourSlot && setDetailItemChip(prevState => [...prevState, reserveOptions[0]]);
         query.fromHalfHour && setDetailItemChip(prevState => [...prevState, reserveOptions[1]]);
-    })
+
+        console.log({min: query.areaMin, max: query.areaMax})
+    },[])
 
     return (
         <div style={isWide ? {display: 'flex', padding: '24px 36px'} : {padding: 24}}>

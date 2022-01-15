@@ -42,7 +42,7 @@ export default function SpaceDialog() {
     };
 
     return (
-        <StudioDialog open={spaceOpen} handleCancel={spaceCancel} handleOk={spaceOk} padding={20}>
+        <StudioDialog open={spaceOpen} handleCancel={spaceCancel} handleOk={spaceOk} padding={'20px'}>
             <BoldTypography>面積</BoldTypography>
             <MinMaxSelect min={minArea} max={maxArea}
                           minOptions={minAreaOptions} maxOptions={maxAreaOptions} unit={'m²'}
