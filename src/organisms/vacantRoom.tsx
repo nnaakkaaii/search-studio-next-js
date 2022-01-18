@@ -5,6 +5,7 @@ import SlotTime from "../molecules/slotTime";
 import VacantRoomTop from "../molecules/vacantRoomTop";
 import StudioReserveButton from "../atoms/studioReserveButton";
 import SearchChip from "../atoms/searchChip";
+import Image from "next/image";
 
 type Room = {
             "room_name": string,
@@ -46,7 +47,7 @@ export default function VacantRoom(props: {room: Room}) {
     const items = [...room.room_facilities, ...room.amenities];
 
     return (
-        <div style={{padding: '24px', color: '#5A4628'}}>
+        <div style={{padding: '24px', color: '#5A4628', zIndex: 1}}>
             <VacantRoomTop name={room.room_name} area={room.floor_area}
                            minPeople={room.min_people} maxPeople={room.max_people} floor={room.floor_material}/>
             <div style={{display: 'flex', marginBottom: 4}}>
@@ -54,7 +55,7 @@ export default function VacantRoom(props: {room: Room}) {
                     items.map((item, index) => <SearchChip key={index} label={item.name}/>)
                 }
             </div>
-            <ImgCarousel img={room.room_img} indicators/>
+            <ImgCarousel img={room.room_img}/>
             <SlotTable slots={room.slots}/>
             <SlotTime minutes={room.min_reserve_minutes}/>
             <div style={{display: 'flex'}}>

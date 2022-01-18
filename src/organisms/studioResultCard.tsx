@@ -10,6 +10,7 @@ import SlotTime from "../molecules/slotTime";
 import SmallTypography from "../atoms/smallTypography";
 import {styled} from "@mui/system";
 import {Card, CardActionArea, CardContent} from "@mui/material";
+import Image from "next/image";
 
 const MyCardContent = styled(CardContent)({
     color: "#5A4628",
@@ -40,7 +41,7 @@ export default function StudioResultCard(props: StudioResultCardProps) {
                             studio.rooms.map((room, index) =>
                                 <div key={index} style={{padding: '8px 0'}}>
                                     <RoomTop room={room.room_name} floorArea={room.floor_area}/>
-                                    <ImgCarousel img={room.room_img} indicators/>
+                                    <ImgCarousel img={room.room_img}/>
                                     <SlotTable slots={room.slots}/>
                                     <SlotTime minutes={room.min_reserve_minutes}/>
                                 </div>

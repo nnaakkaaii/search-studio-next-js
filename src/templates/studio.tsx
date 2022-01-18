@@ -12,6 +12,7 @@ import axios from "axios";
 import {initialStudio, StudioType} from "../seachResultType";
 import BlueButton from "../atoms/blueButton";
 import {styled} from "@mui/system";
+import {useWindowSize} from "react-use";
 
 const TitleWrapper = styled('div')({
     position: 'sticky',
@@ -29,25 +30,22 @@ export default function Studio() {
     const isWide = useMedia({ minWidth: "800px" });
     const [imgTop, setImgTop] = React.useState<number>(0)
     const [barTop, setBarTop] = React.useState<number>(0)
-    const [height, setHeight] = React.useState<number>(0)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/studios/?studio_id=' + search.substring(8).replace('?', ''))
+        axios.get('http://localhost:5000/studios/?studio_id=' + search.substring(9).replace('?', '&'))
             .then(response => {
                 setStudio(response.data)
             });
     })
 
+    const {width, height} = useWindowSize()
+
     useEffect(() => {
-    if (typeof window !== 'undefined') {
-    window.onresize = function () {
-        setHeight(window.innerHeight);
-        console.log(height)
-        if (window.innerWidth >= 321) {
-            setImgTop(80 - window.innerWidth / 3)
-            setBarTop(75 + window.innerWidth / 3)
+        if (width >= 321) {
+            setImgTop(80 - width / 3)
+            setBarTop(75 + width / 3)
         }
-    };}})
+    }, [width])
 
     function StudioInformation() {
         return <StudioInfo intro={studio.studio_introduction} facilities={studio.studio_facilities}
@@ -88,6 +86,14 @@ export default function Studio() {
         })
     */}
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            window.onresize = function() {
+                console.log(window.innerWidth)
+            }
+        }
+    })
+
     return (
         <>
             <TitleWrapper>
@@ -102,7 +108,7 @@ export default function Studio() {
                 isWide ?
                     <div style={{display: 'flex'}}>
                         <div style={{flexGrow: 1, overflow: 'scroll', height: height - 184}}>
-                            <ImgCarousel img={studio.studio_img} indicators/>
+                            <ImgCarousel img={studio.studio_img}/>
                             <StudioInformation/>
                         </div>
                         <VacantRoomPaper rooms={studio.rooms} height={height}/>
@@ -110,14 +116,12 @@ export default function Studio() {
 
                     :
                 <>
-                    <div style={{marginBottom: 20, position: 'sticky', top: 0, flexGrow: 1, zIndex: 100}}>
-                        <ImgCarousel img={studio.studio_img} indicators/>
+                    <div style={{marginBottom: 20, position: 'sticky', top: imgTop, zIndex: 100}}>
+                        <ImgCarousel img={studio.studio_img}/>
                     </div>
                     {/**img*/}
                     <StudioMenuTab barTop={barTop}>
-                        {
-                            studio.rooms.map((room, index) => <VacantRoom room={room} key={index}/>)
-                        }
+                            {studio.rooms.map((room, index) => <VacantRoom room={room} key={index}/>)}
                         <StudioInformation/>
                     </StudioMenuTab>
                 </>
