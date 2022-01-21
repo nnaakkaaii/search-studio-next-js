@@ -7,6 +7,9 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../theme';
 import createEmotionCache from '../createEmotionCache';
 import { RecoilRoot } from "recoil";
+import { ApolloProvider } from "react-apollo";
+import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
+import { appClient } from "../graphql/client";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -19,13 +22,18 @@ export default function MyApp(props) {
             <Head>
                 <meta name="viewport" content="initial-scale=1, width=device-width" />
             </Head>
-            <RecoilRoot>
-                <ThemeProvider theme={theme}>
-                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                    <CssBaseline />
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            </RecoilRoot>
+
+            <ApolloProvider client={appClient}>
+                <ApolloHooksProvider client={appClient}>
+                    <RecoilRoot>
+                        <ThemeProvider theme={theme}>
+                            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                            <CssBaseline />
+                            <Component {...pageProps} />
+                        </ThemeProvider>
+                    </RecoilRoot>
+                </ApolloHooksProvider>
+            </ApolloProvider>
         </CacheProvider>
     );
 }

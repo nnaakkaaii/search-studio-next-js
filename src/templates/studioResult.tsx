@@ -15,6 +15,11 @@ import {reserveOptions} from "../itemsAndOptions/detailOptions";
 import PageTitle from "../atoms/pageTitle";
 import BoldTypography from "../atoms/boldTypography";
 import StudioQueryChange from "../organisms/studioQueryChange";
+import {useQuery} from "react-apollo-hooks";
+import {GET_STUDIOS} from "../graphql/tags/getStudios";
+import {Breadcrumbs} from "@mui/material";
+import Link from "next/link";
+import StudioBreadcrumbs from "../molecules/studioBreadcrumbs";
 
 export default function StudioResult() {
     const isWide = useMedia({ minWidth: "800px" });
@@ -38,7 +43,12 @@ export default function StudioResult() {
     const search = useRouter().asPath.substring(8);
     const query = FromQuery();
 
+    const { data, error, loading } = useQuery(GET_STUDIOS, {
+        variables: {},
+    });
+
     useEffect(() => {
+        //setSearchResult(data)
         axios.get('http://localhost:5000/studios/' + search)
         .then(response => {
             setSearchResult(response.data)
@@ -61,22 +71,30 @@ export default function StudioResult() {
         query.freeCancel && setDetailItemChip(prevState => [...prevState, 'キャンセル無料期間あり']);
         query.halfHourSlot && setDetailItemChip(prevState => [...prevState, reserveOptions[0]]);
         query.fromHalfHour && setDetailItemChip(prevState => [...prevState, reserveOptions[1]]);
-
-        console.log({min: query.areaMin, max: query.areaMax})
     },[])
 
     return (
-        <div style={isWide ? {display: 'flex', padding: '24px 36px'} : {padding: 24}}>
-            <StudioQueryChange isWide={isWide}/>
-            <div style={isWide ? {flexGrow: 3} : {}}>
-                <PageTitle margin={'24px 0 0'} center>検索結果</PageTitle>
-                <BoldTypography sub center>全{searchResult.total_pages}件</BoldTypography>
-                {
-                    searchResult.studios.map((studio, index) =>
-                        <StudioResultCard studio={studio} search={search} isWide={isWide} key={index}/>
-                    )
-                }
+        <>
+            <StudioBreadcrumbs>
+                <>検索結果一覧</>
+            </StudioBreadcrumbs>
+            <div style={isWide ? {display: 'flex', padding: '0 36px 24px'} : {padding: '8px 24px 24px'}}>
+                <StudioQueryChange isWide={isWide}/>
+                <div style={isWide ? {flexGrow: 3} : {}}>
+                    <PageTitle margin={'24px 0 0'} center>検索結果</PageTitle>
+                    <BoldTypography sub center>全{searchResult.total_pages}件</BoldTypography>
+                    {
+                        searchResult.studios.map((studio, index) =>
+                            <StudioResultCard studio={studio} search={search} isWide={isWide} key={index}/>
+                        )
+                    }
+                    {
+                        searchResult.studios.map((studio, index) =>
+                            <StudioResultCard studio={studio} search={search} isWide={isWide} key={index}/>
+                        )
+                    }
+                </div>
             </div>
-        </div>
+        </>
     );
 }

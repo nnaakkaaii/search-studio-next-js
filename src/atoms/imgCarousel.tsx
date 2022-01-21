@@ -19,7 +19,7 @@ export default function ImgCarousel(props: ImgCarouselProps) {
                 img.map((img) =>
                     <div key={0} style={{position: 'relative', width: '100%',}}>
                         <Image width={300} height={200} layout={'responsive'} objectFit={'contain'}
-                               alt={img.description}
+                               alt={img.name}
                                src={img.path !== '' ? img.path : "https://placehold.jp/300x200.png"}/>
                     </div>)
             }

@@ -13,25 +13,30 @@ import {initialStudio, StudioType} from "../seachResultType";
 import BlueButton from "../atoms/blueButton";
 import {styled} from "@mui/system";
 import {useWindowSize} from "react-use";
+import {useQuery} from "react-apollo-hooks";
+import { GET_STUDIOS } from "../graphql/tags/getStudios";
+import {Breadcrumbs, Typography} from "@mui/material";
+import StudioBreadcrumbs from "../molecules/studioBreadcrumbs";
 
 const TitleWrapper = styled('div')({
     position: 'sticky',
-    top: 100,
-    zIndex: 1000,
-    padding: 16,
-    display: 'flex',
-    justifyContent: 'space-between'
+    top: 128,
+    zIndex: 1000
 })
 
 export default function Studio() {
     const search = useRouter().asPath;
+    const { data, error, loading } = useQuery(GET_STUDIOS, {
+        variables: {},
+    });
     const [studio, setStudio] = useState<StudioType>(initialStudio);
     const isSmall = useMedia({ maxWidth: "560px" });
     const isWide = useMedia({ minWidth: "800px" });
-    const [imgTop, setImgTop] = React.useState<number>(0)
-    const [barTop, setBarTop] = React.useState<number>(0)
+    const [imgTop, setImgTop] = React.useState<number>(80-107)
+    const [barTop, setBarTop] = React.useState<number>(75+107)
 
     useEffect(() => {
+        //setStudio(data)
         axios.get('http://localhost:5000/studios/?studio_id=' + search.substring(9).replace('?', '&'))
             .then(response => {
                 setStudio(response.data)
@@ -96,13 +101,12 @@ export default function Studio() {
 
     return (
         <>
+            <StudioBreadcrumbs>
+                <Link href={`/studios/${search.substring(9 + studio.studio_id.length)}`} passHref>検索結果一覧</Link>
+                <>{studio.studio_name}studio_name</>
+            </StudioBreadcrumbs>
             <TitleWrapper>
-                <PageTitle>{studio.studio_name}</PageTitle>
-                <Link href={`/studios/${search.substring(9 + studio.studio_id.length)}`} passHref>
-                    <BlueButton padding={isSmall ? '3px 6px' : '6px 8px'} margin={isSmall ?  0 : '4px 20px'}>
-                        検索画面へ
-                    </BlueButton>
-                </Link>
+                <PageTitle margin={'4px 8px'}>studio_name{studio.studio_name}</PageTitle>
             </TitleWrapper>
             {
                 isWide ?
@@ -116,12 +120,12 @@ export default function Studio() {
 
                     :
                 <>
-                    <div style={{marginBottom: 20, position: 'sticky', top: imgTop, zIndex: 100}}>
+                    <div style={{marginBottom: 10, position: 'sticky', top: imgTop, zIndex: 100}}>
                         <ImgCarousel img={studio.studio_img}/>
                     </div>
                     {/**img*/}
                     <StudioMenuTab barTop={barTop}>
-                            {studio.rooms.map((room, index) => <VacantRoom room={room} key={index}/>)}
+                        {studio.rooms.map((room, index) => <VacantRoom room={room} key={index}/>)}
                         <StudioInformation/>
                     </StudioMenuTab>
                 </>

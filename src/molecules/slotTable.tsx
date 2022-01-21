@@ -32,7 +32,6 @@ const PriceTableCell = styled(TableCell)({
     }
 })
 
-
 const MyTableRow = styled(TableRow)({
     height: 28,
     border: '1px solid #D7D2C8'
@@ -50,10 +49,6 @@ const NormalCellWrapper = styled('div')({
     width: '100%'
 })
 
-const times = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' 10', '11'
-]
-
 interface SlotTableProps {
    slots: {
         workload: number,
@@ -65,8 +60,13 @@ interface SlotTableProps {
 }
 
 export default function SlotTable(props: SlotTableProps) {
+    const times = []
+    for (let i = 0; i<25; i++) {
+        times.push(i)
+    }
+
     return (
-        <TableContainer sx={{m: 4, overflow: 'scroll'}}>
+        <TableContainer sx={{mb: '4px', overflow: 'scroll'}}>
             <Table>
                 <TableHead>
                     <TableRow>

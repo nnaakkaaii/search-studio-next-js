@@ -326,7 +326,7 @@ const Indicators = (props: IndicatorProps) => {
     }
 
     return (
-        <div style={{width: "100%", marginTop: "10px", textAlign: "center"}}>
+        <div style={{width: "100%", textAlign: "center"}}>
             {indicators}
         </div>
     )
