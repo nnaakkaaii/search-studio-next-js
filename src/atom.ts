@@ -218,3 +218,24 @@ export const studioSearchPaperOpenState = atom<boolean>({
     key: "studioSearchPaperOpen",
     default: false,
 });
+
+export const reserveDateState = atom<Date>({
+    key: "reserveDate",
+    default: new Date(),
+});
+
+export const reserveTimeState = atom<{roomIndex: number, startIndex: number, endIndex: number}|null>({
+    key: "reserveTime",
+    default: null,
+});
+
+export const reservePriceState = atom<number>({
+    key: "reservePrice",
+    default: 0,
+});
+
+
+export const reserveDataState = atom<{room: string, startTime: string, endTime: string}|null>({
+    key: "reserveData",
+    default: null,
+});

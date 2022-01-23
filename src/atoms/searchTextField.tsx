@@ -23,6 +23,7 @@ interface SearchTextFieldProps {
     label: string;
     value: string;
     onChange: (event: any) => void;
+    textStart?: boolean;
 }
 
 export default function SearchTextField(props: SearchTextFieldProps) {
@@ -30,7 +31,7 @@ export default function SearchTextField(props: SearchTextFieldProps) {
         <>
             <MyTextField variant="outlined"
                           inputProps={
-                              !props.value ?
+                              !props.value && !props.textStart ?
                                   {style: {color: '#5A4628', fontSize: 14, padding: 10, textAlign: 'center'}}
                                   : {style: {color: '#5A4628', fontSize: 14, padding: 10, textAlign: 'start'}}
                           }

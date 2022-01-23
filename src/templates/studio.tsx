@@ -15,8 +15,9 @@ import {styled} from "@mui/system";
 import {useWindowSize} from "react-use";
 import {useQuery} from "react-apollo-hooks";
 import { GET_STUDIOS } from "../graphql/tags/getStudios";
-import {Breadcrumbs, Typography} from "@mui/material";
+import {Breadcrumbs, Button, Typography} from "@mui/material";
 import StudioBreadcrumbs from "../molecules/studioBreadcrumbs";
+import BoldButton from "../atoms/boldButton";
 
 const TitleWrapper = styled('div')({
     position: 'sticky',
@@ -125,7 +126,7 @@ export default function Studio() {
                     </div>
                     {/**img*/}
                     <StudioMenuTab barTop={barTop}>
-                        {studio.rooms.map((room, index) => <VacantRoom room={room} key={index}/>)}
+                         {studio.rooms.map((room, index) => <VacantRoom room={room} key={index}/>)}
                         <StudioInformation/>
                     </StudioMenuTab>
                 </>

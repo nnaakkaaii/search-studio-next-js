@@ -2,12 +2,12 @@ import 'date-fns';
 import React from 'react';
 import {styled} from "@mui/system";
 import DatePicker from '@mui/lab/DatePicker';
-import {Button, TextField} from "@mui/material";
+import {Button, Popover, TextField} from "@mui/material";
 import {CalendarPicker, LocalizationProvider, MobileDatePicker} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import ja from "date-fns/locale/ja";
 import DateConvert from "../dateConvert";
-import {ExpandLess, ExpandMore} from "@mui/icons-material";
+import {CalendarToday, ExpandLess, ExpandMore} from "@mui/icons-material";
 
 const MyButton = styled(Button)({
     color: "#5A4628",
@@ -15,12 +15,13 @@ const MyButton = styled(Button)({
     borderRadius: 0,
     margin: '0 4px 8px',
     padding: '4px 8px',
+    width: 140,
+    justifyContent: 'space-between'
 })
 
 const MyCalendarPicker = styled(CalendarPicker)({
     maxHeight: 330,
-    width: 280,
-    marginTop: -20,
+    overflow: 'hidden'
 })
 
 interface SearchDatePickerProps {
@@ -29,25 +30,37 @@ interface SearchDatePickerProps {
 }
 
 export default function SearchDatePicker(props: SearchDatePickerProps) {
-    const [open, setOpen] = React.useState(false)
+    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
-    const onChange = () => {
-        setOpen(prevState => !prevState)
-    }
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={ja}>
-            <MyButton onClick={onChange}>
+            <MyButton onClick={handleClick}>
                 { props.value !== null ? DateConvert(props.value) : '日付を選択' }
-                { open ? <ExpandLess sx={{ml: '12px'}}/> : <ExpandMore sx={{ml: '12px'}}/> }
+                <CalendarToday/>
             </MyButton>
-            <div style={open ? {} : {display: 'none'}}>
-                <MyCalendarPicker
-                    views={['day']}
-                    minDate={new Date()}
-                    maxDate={new Date().setMonth(new Date().getMonth() + 2)}
-                    date={props.value} onChange={props.changeDate} />
-            </div>
+            <Popover open={open}
+                     anchorEl={anchorEl}
+                     onClick={handleClose}
+                     anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}>
+                <div onClick={(e) => {e.stopPropagation()}}>
+                    <MyCalendarPicker
+                        views={['day']}
+                        minDate={new Date()}
+                        maxDate={new Date().setMonth(new Date().getMonth() + 2)}
+                        date={props.value} onChange={props.changeDate} />
+                </div>
+                <Button sx={{width: '100%'}}>閉じる</Button>
+            </Popover>
         </LocalizationProvider>
     );
 }
