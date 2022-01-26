@@ -9,13 +9,28 @@ const BreadWrapper = styled('div')({
     zIndex: 5000,
 })
 
-export default function StudioBreadcrumbs(props: {children: React.ReactNode}) {
+interface StudioBreadcrumbsProps {
+    crumbs: {
+        label: string,
+        link?: string
+    }[]
+}
+
+export default function StudioBreadcrumbs(props: StudioBreadcrumbsProps) {
 
     return (
             <BreadWrapper>
                 <Breadcrumbs sx={{fontSize: 12, m: '8px'}} aria-label="breadcrumb">
                     <Link href={'/'}>スタジオ検索トップ</Link>
-                    {props.children}
+                    {
+                        props.crumbs.map((crumb, index) =>
+                            crumb.link ?
+                                <div key={index}>
+                                    <Link href={crumb.link}>{crumb.label}</Link>
+                                </div>
+                                : <div key={index}>{crumb.label}</div>
+                        )
+                    }
                 </Breadcrumbs>
             </BreadWrapper>
     );

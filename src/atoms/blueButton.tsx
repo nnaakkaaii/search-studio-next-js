@@ -2,7 +2,7 @@ import React from "react";
 import {Button} from "@mui/material";
 import {styled} from "@mui/system";
 
-interface BlueButtonProps{
+interface BlueButtonProps {
     children: any,
     fontSize?: number,
     padding?: any,
@@ -11,11 +11,9 @@ interface BlueButtonProps{
     disabled?: boolean,
 }
 
-export default function BlueButton(props: BlueButtonProps) {
+
+const BlueButton = React.forwardRef<HTMLButtonElement, BlueButtonProps>((props, ref) => {
     const MyButton = styled(Button)({
-            fontSize: props.fontSize,
-            padding: props.padding,
-            margin: props.margin,
             minWidth: 48,
             width: 'fit-content',
             display: 'flex',
@@ -34,8 +32,11 @@ export default function BlueButton(props: BlueButtonProps) {
         })
 
     return (
-        <MyButton onClick={props.onClick} disabled={props.disabled}>
+        <MyButton onClick={props.onClick} sx={{fontSize: props.fontSize, p: props.padding, m: props.margin}}
+                  disabled={props.disabled} ref={ref}>
             {props.children}
         </MyButton>
     );
-}
+})
+
+export default BlueButton;

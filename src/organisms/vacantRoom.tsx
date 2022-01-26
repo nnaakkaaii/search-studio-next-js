@@ -5,7 +5,6 @@ import SlotTime from "../molecules/slotTime";
 import VacantRoomTop from "../molecules/vacantRoomTop";
 import StudioReserveButton from "../atoms/studioReserveButton";
 import SearchChip from "../atoms/searchChip";
-import Image from "next/image";
 
 type Room = {
             "room_name": string,
@@ -58,9 +57,7 @@ export default function VacantRoom(props: {room: Room}) {
             <ImgCarousel img={room.room_img}/>
             <SlotTable slots={room.slots}/>
             <SlotTime minutes={room.min_reserve_minutes}/>
-            <div style={{display: 'flex'}}>
-                <StudioReserveButton/>
-            </div>
+            <StudioReserveButton/>
         </div>
     );
 }

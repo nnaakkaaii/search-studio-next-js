@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import {styled} from "@mui/system";
 
-const MyTextField = styled(TextField)({
+export const MyTextField = styled(TextField)({
     height: 36,
     margin: '0 2%',
     width: '96%',
@@ -23,7 +23,6 @@ interface SearchTextFieldProps {
     label: string;
     value: string;
     onChange: (event: any) => void;
-    textStart?: boolean;
 }
 
 export default function SearchTextField(props: SearchTextFieldProps) {
@@ -31,7 +30,7 @@ export default function SearchTextField(props: SearchTextFieldProps) {
         <>
             <MyTextField variant="outlined"
                           inputProps={
-                              !props.value && !props.textStart ?
+                              !props.value ?
                                   {style: {color: '#5A4628', fontSize: 14, padding: 10, textAlign: 'center'}}
                                   : {style: {color: '#5A4628', fontSize: 14, padding: 10, textAlign: 'start'}}
                           }

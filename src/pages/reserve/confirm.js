@@ -1,16 +1,20 @@
-import Header from "../../organisms/header";
-import TopMenuTab from "../../organisms/topMenuTab";
-import StudioReserveConfirm from "../../templates/studioReserveConfirm";
+import StudioReserve from "../../templates/studioReserve";
+import Link from "next/link";
+import BlueButton from "../../atoms/blueButton";
+import React from "react";
+import ReserveData from "../../molecules/reserveData";
+import {useRouter} from "next/router";
 
 export default function Home() {
+    const query = useRouter().query;
+
     return (
-        <>
-            <Header/>
-            <TopMenuTab>
-                <StudioReserveConfirm key={0}/>
-                <div key={1}>レッスン・練習会を探す</div>
-                <div key={2}>ナンバー・イベントを探す</div>
-            </TopMenuTab>
-        </>
+        <StudioReserve step={2}>
+            <ReserveData/>
+            上記内容で予約します
+            <Link href={{pathname: '/reserve/done', query: query}} passHref>
+                <BlueButton padding={'4px 16px'} margin={'0 auto'} fontSize={16}>決&nbsp;定</BlueButton>
+            </Link>
+        </StudioReserve>
     )
 }
