@@ -17,6 +17,11 @@ export const MyTextField = styled(TextField)({
             borderColor: '#9B8C7D',
         },
     },
+    '& .MuiOutlinedInput-input': {
+        color: '#5A4628',
+        fontSize: 14,
+        padding: '8px 12px',
+    },
 })
 
 interface SearchTextFieldProps {
@@ -28,13 +33,8 @@ interface SearchTextFieldProps {
 export default function SearchTextField(props: SearchTextFieldProps) {
     return (
         <>
-            <MyTextField variant="outlined"
-                          inputProps={
-                              !props.value ?
-                                  {style: {color: '#5A4628', fontSize: 14, padding: 10, textAlign: 'center'}}
-                                  : {style: {color: '#5A4628', fontSize: 14, padding: 10, textAlign: 'start'}}
-                          }
-                          placeholder={props.label} onChange={props.onChange} value={props.value}/>
+            <MyTextField inputProps={!props.value ? {style: {textAlign: 'center'}} : {}}
+                         placeholder={props.label} onChange={props.onChange} value={props.value}/>
         </>
     );
 }

@@ -1,14 +1,14 @@
 import StudioReserve from "../../templates/studioReserve";
 import {Typography, TextField} from "@mui/material";
-import SearchTextField from "../../atoms/searchTextField";
+import SearchTextField, {MyTextField} from "../../atoms/searchTextField";
 import Link from "next/link";
 import BlueButton from "../../atoms/blueButton";
 import React, {useState} from "react";
 import {useRouter} from "next/router";
 import Router from 'next/router'
 import { useForm, Controller } from 'react-hook-form';
-import InputTextField from "../../atoms/inputTextField";
-import { ErrorMessage } from '@hookform/error-message';
+import PaymentForm from "../../organisms/paymentForm";
+
 
 export default function Home() {
     const query = useRouter().query;
@@ -35,13 +35,13 @@ export default function Home() {
                     control={control} name="familyName"
                     rules={{required: true}}
                     render={({ field }) => (
-                        <InputTextField placeholder={'姓'} field={field}/>
+                        <MyTextField placeholder={'姓'} {...field}/>
                     )}/>
                 <Controller
                     control={control} name="firstName"
                     rules={{required: true}}
                     render={({ field }) => (
-                        <InputTextField placeholder={'名'} field={field}/>
+                        <MyTextField placeholder={'名'} {...field}/>
                     )}/>
             </div>
             <Typography sx={{mt: '12px'}}>電話番号</Typography>
@@ -49,7 +49,7 @@ export default function Home() {
                 control={control} name="phone"
                 rules={{required: true}}
                 render={({ field }) => (
-                    <InputTextField placeholder={'半角数字 -(ハイフン)なし'} field={field}/>
+                    <MyTextField placeholder={'半角数字 -(ハイフン)なし'} {...field}/>
                 )}/>
             <Typography sx={{mt: '12px'}}>メールアドレス</Typography>
             <Controller
@@ -61,8 +61,9 @@ export default function Home() {
                         message: 'メールアドレスの形式が不正です',
                     }}}
                 render={({ field }) => (
-                    <InputTextField placeholder={'xxx@search.com'} field={field}/>
+                    <MyTextField placeholder={'xxx@search.com'} {...field}/>
                 )}/>
+            <PaymentForm/>
             <BlueButton onClick={handleSubmit(onSubmit)} padding={'4px 16px'} margin={'20px auto 0'} fontSize={16}>
                 決&nbsp;定
             </BlueButton>

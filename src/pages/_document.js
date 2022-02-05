@@ -2,12 +2,14 @@ import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../createEmotionCache';
+import Script from "next/script";
 
 export default class MyDocument extends Document {
     render() {
         return (
             <Html lang="en">
                 <Head>
+                    <Script src="https://js.stripe.com/v3/" async></Script>
                 </Head>
                 <body>
                 <Main />
