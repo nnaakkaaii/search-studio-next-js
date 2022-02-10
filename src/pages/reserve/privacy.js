@@ -2,16 +2,27 @@ import StudioReserve from "../../templates/studioReserve";
 import {Typography, TextField} from "@mui/material";
 import SearchTextField, {MyTextField} from "../../atoms/searchTextField";
 import Link from "next/link";
-import BlueButton from "../../atoms/blueButton";
-import React, {useState} from "react";
+import {MyBlueButton} from "../../atoms/blueButton";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import Router from 'next/router'
 import { useForm, Controller } from 'react-hook-form';
 import PaymentForm from "../../organisms/paymentForm";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {inputDataState, reserveDataState} from "../../atom";
 
 
 export default function Home() {
-    const query = useRouter().query;
+    const router = useRouter();
+    const query = router.query;
+    const reserveData = useRecoilValue(reserveDataState);
+    const setInputData = useSetRecoilState(inputDataState);
+
+    useEffect(() => {
+        if (reserveData === null) {
+            query ? router.replace({pathname: '/reserve', query: query}) : router.replace('/')
+        }
+    })
 
     const { handleSubmit, control } = useForm({
         defaultValues: {
@@ -23,8 +34,8 @@ export default function Home() {
     });
 
     const onSubmit = (data) => {
-        console.log(data)
-        Router.push({pathname: '/reserve/confirm', query: query})
+        setInputData(data)
+        router.push({pathname: '/reserve/confirm', query: query})
     };
 
     return (
@@ -64,9 +75,10 @@ export default function Home() {
                     <MyTextField placeholder={'xxx@search.com'} {...field}/>
                 )}/>
             <PaymentForm/>
-            <BlueButton onClick={handleSubmit(onSubmit)} padding={'4px 16px'} margin={'20px auto 0'} fontSize={16}>
+            <MyBlueButton sx={{p: '4px 16px', m: '20px auto 0', fontSize: '16px'}}
+                          onClick={handleSubmit(onSubmit)}>
                 決&nbsp;定
-            </BlueButton>
+            </MyBlueButton>
         </StudioReserve>
     )
 }

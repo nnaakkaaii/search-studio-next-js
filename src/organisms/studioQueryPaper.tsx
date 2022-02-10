@@ -4,7 +4,7 @@ import OutlineButton from "../atoms/outlineButton";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {dateOpenState, detailOpenState, placeOpenState, spaceOpenState, studioSearchPaperOpenState} from "../atom";
 import BoldTypography from "../atoms/boldTypography";
-import BlueButton from "../atoms/blueButton";
+import {MyBlueButton} from "../atoms/blueButton";
 import {styled} from "@mui/system";
 import {Paper} from "@mui/material";
 
@@ -50,7 +50,7 @@ export default function StudioQueryPaper(props: {isWide?: boolean}) {
                 {
                     !props.isWide &&
                     (open ? <OutlineButton onClick={handleClick}>閉じる</OutlineButton>
-                        : <BlueButton padding={0} margin={4} onClick={handleClick}>変更</BlueButton>)
+                        : <MyBlueButton sx={{p: 0, m: '4px'}} onClick={handleClick}>変更</MyBlueButton>)
                 }
             </div>
         </MyPaper>

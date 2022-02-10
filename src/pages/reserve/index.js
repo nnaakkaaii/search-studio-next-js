@@ -1,16 +1,18 @@
 import StudioReserve from "../../templates/studioReserve";
 import SearchDatePicker from "../../atoms/searchDatePicker";
 import ReserveSlotTable from "../../molecules/reserveSlotTable";
-import Link from "next/link";
-import BlueButton from "../../atoms/blueButton";
+import {MyBlueButton} from "../../atoms/blueButton";
 import React, {useEffect} from "react";
 import {useRecoilState, useSetRecoilState, useRecoilValue} from "recoil";
 import {reserveDataState, reserveDateState, reservePriceState, reserveTimeState} from "../../atom";
 import ReserveData from "../../molecules/reserveData";
 import {useRouter} from "next/router";
+import {useMedia} from "use-media";
 
 export default function Home() {
-    const query = useRouter().query;
+    const isWide = useMedia({ minWidth: "460px" });
+    const router = useRouter();
+    const query = router.query;
     const [date, setDate] = useRecoilState(reserveDateState)
     const select = useRecoilValue(reserveTimeState)
     const setPrice = useSetRecoilState(reservePriceState)
@@ -59,11 +61,14 @@ export default function Home() {
         <StudioReserve step={0}>
             <SearchDatePicker value={date} changeDate={changeDate}/>
             <ReserveSlotTable roomSlot={roomSlot}/>
-            <div style={{margin: '12px 8px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <div style={isWide ? {margin: '12px 8px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}
+                : {margin: '12px 8px 0'}}>
                 <ReserveData select/>
-                <Link href={{pathname: '/reserve/privacy', query: query}} passHref>
-                    <BlueButton padding={'4px 16px'} fontSize={16} disabled={!select}>決&nbsp;定</BlueButton>
-                </Link>
+                <MyBlueButton sx={{p: '4px 16px', m: isWide ? {} : 'auto', fontSize: '16px'}}
+                              disabled={!select}
+                              onClick={() => router.push({pathname: '/reserve/privacy', query: query})}>
+                    決&nbsp;定
+                </MyBlueButton>
             </div>
         </StudioReserve>
     )

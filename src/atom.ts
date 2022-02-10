@@ -239,3 +239,8 @@ export const reserveDataState = atom<{room: string, startTime: string, endTime: 
     key: "reserveData",
     default: null,
 });
+
+export const inputDataState = atom<any|null>({
+    key: "inputData",
+    default: null,
+});

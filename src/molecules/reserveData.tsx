@@ -15,7 +15,7 @@ export default function ReserveData(props: {select?: boolean}) {
                 <BoldTypography>{props.select ? '選択' : '予約'}内容&nbsp;:&nbsp;</BoldTypography>
                 {
                     reserveData &&
-                    <Typography>
+                    <Typography sx={{whiteSpace: 'nowrap'}}>
                         {reserveData.room} {DateConvert(date)} {reserveData.startTime}~{reserveData.endTime}
                     </Typography>
                 }

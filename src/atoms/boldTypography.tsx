@@ -11,7 +11,7 @@ export default function BoldTypography(props: BoldTypographyProps) {
     return (
         <Typography variant={props.sub ? 'subtitle2' : 'subtitle1'}
                     align={props.center ? 'center' : 'left'}
-                    sx={{color: "#5A4628", fontWeight: 'bold', m: props.margin}}>
+                    sx={{color: "#5A4628", fontWeight: 'bold', whiteSpace: 'nowrap', m: props.margin}}>
             {props.children}
         </Typography>
     );

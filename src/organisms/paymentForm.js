@@ -1,11 +1,9 @@
 import {CardCvcElement, CardExpiryElement, CardNumberElement, Elements} from "@stripe/react-stripe-js";
 import {FormControl} from "@mui/material";
 import {styled} from "@mui/system";
-import TextField from "@mui/material/TextField";
 import {forwardRef, useImperativeHandle, useRef} from "react";
 import {loadStripe} from "@stripe/stripe-js";
 import {MyTextField} from "../atoms/searchTextField";
-import Script from "next/script";
 
 const StripeTextField = styled(MyTextField)({
     '& .MuiOutlinedInput-input': {
