@@ -1,6 +1,16 @@
 import {atom, selector} from "recoil";
 import {floorMaterialOptions, reservationOptions, roomFacilityOptions, studioFacilityOptions} from "./itemsAndOptions/detailOptions";
 
+export const loginState = atom<null|string>({
+    key: "login",
+    default: null
+})
+
+export const logoutState = atom<boolean>({
+    key: "logout",
+    default: false,
+});
+
 export const placeOpenState = atom<boolean>({
     key: "placeOpen",
     default: false,

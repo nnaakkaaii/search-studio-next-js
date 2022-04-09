@@ -39,6 +39,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
         padding: '4px 16px',
         '&.Mui-expanded': {
             minHeight: 20,
+            margin: 0
         },
         '&.MuiAccordionSummary-expandIcon': {
             color: '#5A4628',
@@ -47,7 +48,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
         },
         '& .MuiAccordionSummary-content': {
             margin: 0,
-            '&$expanded': {
+            '&$Mui-expanded': {
                 margin: 0,
             },
         },

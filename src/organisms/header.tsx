@@ -1,5 +1,9 @@
 import {AppBar, Button, Toolbar, Typography} from "@mui/material";
 import { styled } from '@mui/system';
+import {useRouter} from "next/router";
+import {useRecoilValue} from "recoil";
+import {loginState} from "../atom";
+import MyPageButton from "../molecules/myPageButton";
 
 const MyToolBar = styled(Toolbar)({
     backgroundColor:'#1D356A',
@@ -8,12 +12,24 @@ const MyToolBar = styled(Toolbar)({
     minHeight: 56
 })
 
+const MyButton = styled(Button)({
+    color: '#F9F5F0',
+    fontWeight: 'bold',
+})
+
 export default function Header() {
+    const router = useRouter();
+    const login = useRecoilValue(loginState);
+
     return (
         <AppBar color="primary" position="sticky" sx={{minWidth: 320}}>
             <MyToolBar>
                 <Typography variant="h6">Dance Search</Typography>
-                <Button color="inherit">Login</Button>
+                {
+                    login ?
+                        <MyPageButton/>
+                        : <MyButton sx={{border: 'solid 1px #F9F5F0'}} onClick={() => router.push('/login')}>ログイン</MyButton>
+                }
             </MyToolBar>
         </AppBar>
     );
