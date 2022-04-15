@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import {useRouter} from "next/router";
 import { useSetRecoilState} from "recoil";
 import {logoutState} from "../atom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AccountCircle} from "@material-ui/icons";
 import LogoutDialog from "./logoutDialog";
 import {History, Logout, Settings} from "@mui/icons-material";
@@ -23,11 +23,22 @@ export default function MyPageButton() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    useEffect(() => {
+        open && window.addEventListener('click', () => {setAnchorEl(null)})
+    })
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+        !open && event.stopPropagation()
     };
-    const handleClose = (value?: string) => () => {
-        value === 'logout' ? setLogout(true) : setAnchorEl(null);
+
+    const handleClose = (value?: string) => (e) => {
+        if (value === 'logout') {
+            setLogout(true)
+            e.stopPropagation()
+        } else {
+            setAnchorEl(null)
+        }
     };
 
     return (
@@ -49,16 +60,10 @@ export default function MyPageButton() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MyMenuItem onClick={handleClose()}>
-                    <Settings sx={{mr: '4px'}}/>アカウント設定
-                </MyMenuItem>
-                <MyMenuItem onClick={handleClose()}>
-                    <History sx={{mr: '4px'}}/>予約履歴
-                </MyMenuItem>
-                <MyMenuItem onClick={handleClose('logout')}>
-                    <Logout sx={{mr: '4px'}}/>ログアウト
-                </MyMenuItem>
-                <MyMenuItem onClick={handleClose()}>
+                <MyMenuItem onClick={handleClose()}>アカウント設定</MyMenuItem>
+                <MyMenuItem onClick={handleClose()}>予約履歴</MyMenuItem>
+                <MyMenuItem onClick={handleClose('logout')}>ログアウト</MyMenuItem>
+                <MyMenuItem onClick={handleClose()} sx={{'&.MuiMenuItem-gutters': {minHeight: 0}}}>
                     <div style={{fontSize: '14px', margin: 'auto'}}>閉じる</div>
                 </MyMenuItem>
             </Menu>

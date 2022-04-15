@@ -3,20 +3,25 @@ import {useRecoilValue} from "recoil";
 import {studioSearchPaperOpenState} from "../atom";
 import StudioQueryPaper from "../organisms/studioQueryPaper";
 import StudioSearchPaper from "../organisms/studioSearchPaper";
+import {useMedia} from "use-media";
 
 export default function StudioQueryChange(props: {isWide: boolean}) {
     const {isWide} = props;
+    const isSmall = useMedia({ maxWidth: "600px" });
     const open = useRecoilValue(studioSearchPaperOpenState);
 
     return (
         <div style={
-            isWide ? {flexGrow: 1, width: 240, position: 'static', margin: '44px 20px 0 0'}
-                : {position: 'sticky', top: 130, zIndex: 1100}
+            isWide ? {flexGrow: 1, marginRight: '20px'}
+                : isSmall ? {position: 'fixed', top: 132, marginLeft: -24, width: '100%', zIndex: 1100}
+                    : {position: 'fixed', top: 144, marginLeft: -24, width: '100%', zIndex: 1100}
         }>
-            <StudioQueryPaper isWide={isWide}/>
-            {
-                (open || isWide) && <StudioSearchPaper/>
-            }
+            <div style={isWide ? {position: 'sticky', top: 180} : {margin: '0 8px'}}>
+                <StudioQueryPaper isWide={isWide}/>
+                {
+                    (open || isWide) && <StudioSearchPaper/>
+                }
+            </div>
         </div>
     );
 }

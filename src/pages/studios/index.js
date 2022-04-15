@@ -81,7 +81,7 @@ export default function Home() {
             <div style={isWide ? {display: 'flex', padding: '0 36px 24px'} : {padding: '8px 24px 24px'}}>
                     <StudioQueryChange isWide={isWide}/>
                     <div style={isWide ? {flexGrow: 3} : {}}>
-                        <PageTitle margin={'24px 0 0'} center>検索結果</PageTitle>
+                        <PageTitle margin={isWide ? '12px 0 0' : '36px 0 0'} center>検索結果</PageTitle>
                         <BoldTypography sub center>全{searchResult.total_pages}件</BoldTypography>
                         {
                             searchResult.studios.map((studio, index) =>

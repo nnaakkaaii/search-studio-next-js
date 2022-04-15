@@ -6,9 +6,10 @@ export default function LogoutDialog() {
     const setLogin = useSetRecoilState(loginState);
     const [open, setOpen] = useRecoilState(logoutState);
 
-    const handleClose = (value?: boolean) => () => {
+    const handleClose = (value?: boolean) => (e) => {
         setOpen(false);
         value && setLogin(null)
+        e.stopPropagation()
     };
 
     return (

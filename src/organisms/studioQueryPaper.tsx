@@ -41,7 +41,7 @@ export default function StudioQueryPaper(props: {isWide?: boolean}) {
     };
 
     return (
-        <MyPaper>
+        <MyPaper sx={{minWidth: '240px'}}>
             <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
                 <div style={{minWidth: 60}}>
                     <BoldTypography sub center>検索条件</BoldTypography>

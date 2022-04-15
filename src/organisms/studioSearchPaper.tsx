@@ -23,7 +23,7 @@ export default function StudioSearchPaper(props: {isWide?: boolean}) {
     return (
         <MyPaper elevation={0}
                  sx={isWide ? {minWidth: 520, maxWidth: 800, p: '20px 24px 24px'}
-                     : { minWidth: 200, maxWidth: 400, p: '16px 16px 20px'}}>
+                     : { minWidth: 240, maxWidth: 400, p: '16px 16px 20px'}}>
             <StudioPlace isWide={isWide}/>
             <div style={isWide ? {display: 'flex', marginBottom: 8} : {}}>
                 <StudioSpace isWide={isWide}/>

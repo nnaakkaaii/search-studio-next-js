@@ -17,7 +17,7 @@ const MyButton = styled(Button)({
     fontWeight: 'bold',
 })
 
-export default function Header() {
+export default function Header(props: {loginPage?: boolean}) {
     const router = useRouter();
     const login = useRecoilValue(loginState);
 
@@ -28,7 +28,7 @@ export default function Header() {
                 {
                     login ?
                         <MyPageButton/>
-                        : <MyButton sx={{border: 'solid 1px #F9F5F0'}} onClick={() => router.push('/login')}>ログイン</MyButton>
+                        : !props.loginPage && <MyButton sx={{border: 'solid 1px #F9F5F0'}} onClick={() => router.push('/login')}>ログイン</MyButton>
                 }
             </MyToolBar>
         </AppBar>

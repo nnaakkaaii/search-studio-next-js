@@ -15,7 +15,7 @@ interface TopMenuTabProps {
 }
 
 export default function TopMenuTab(props: TopMenuTabProps) {
-    const isSmall = useMedia({ maxWidth: "370px" });
+    const isSmall = useMedia({ maxWidth: "600px" });
 
     return (
         <MenuTabWrapper>

@@ -2,10 +2,15 @@ import Header from "../organisms/header";
 import TopMenuTab from "../organisms/topMenuTab";
 import React from "react";
 
-export default function Studio(props: {children: React.ReactNode}) {
+interface StudioProps {
+    children: React.ReactNode,
+    loginPage?: boolean
+}
+
+export default function Studio(props: StudioProps) {
     return (
         <>
-            <Header/>
+            <Header loginPage={props.loginPage}/>
             <TopMenuTab>
                 <div key={0}>{props.children}</div>
                 <div key={1}>レッスン・練習会を探す</div>

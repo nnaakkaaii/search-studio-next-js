@@ -4,7 +4,7 @@ import {useMedia} from "use-media";
 import {styled} from "@mui/system";
 import {MyTextField} from "../../atoms/searchTextField";
 import {MyBlueButton} from "../../atoms/blueButton";
-import React from "react";
+import React, {useEffect} from "react";
 import BoldTypography from "../../atoms/boldTypography";
 import {Controller, useForm} from "react-hook-form";
 import {useRouter} from "next/router";
@@ -34,7 +34,7 @@ export default function Home() {
     };
 
     return (
-        <Studio>
+        <Studio loginPage>
             <MyPaper elevation={0} sx={isWide ? {maxWidth: '600px', m: '32px auto 0'} : {}}>
                 <BoldTypography>アカウントをお持ちの方</BoldTypography>
                 <Typography>メールアドレス</Typography>
