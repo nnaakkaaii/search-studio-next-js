@@ -92,31 +92,6 @@ export const peopleChipState = atom<{min: number|null, max: number|null}>({
     default: {min: null, max: null},
 });
 
-export const dateOpenState = atom<boolean>({
-    key: "dateOpen",
-    default: false,
-});
-
-export const addDateOpenState = atom<boolean[]>({
-    key: "addDateOpen",
-    default: [true],
-});
-
-export const dateState = atom<{date: Date, startTime: string|null, endTime: string|null, matchTime: boolean}[]>({
-    key: "date",
-    default: [],
-});
-
-export const dateChipState = atom<{date: Date, startTime: string|null, endTime: string|null, matchTime: boolean}[]>({
-    key: "dateChip",
-    default: [],
-});
-
-export const dateMatchState = atom<boolean>({
-    key: "dateMatch",
-    default: false,
-});
-
 export const detailOpenState = atom<boolean>({
     key: "detailOpen",
     default: false,
@@ -227,27 +202,6 @@ export const floorMaterialChipState = selector({
 export const studioSearchPaperOpenState = atom<boolean>({
     key: "studioSearchPaperOpen",
     default: false,
-});
-
-export const reserveDateState = atom<Date>({
-    key: "reserveDate",
-    default: new Date(),
-});
-
-export const reserveTimeState = atom<{roomIndex: number, startIndex: number, endIndex: number}|null>({
-    key: "reserveTime",
-    default: null,
-});
-
-export const reservePriceState = atom<number>({
-    key: "reservePrice",
-    default: 0,
-});
-
-
-export const reserveDataState = atom<{room: string, startTime: string, endTime: string}|null>({
-    key: "reserveData",
-    default: null,
 });
 
 export const inputDataState = atom<any|null>({

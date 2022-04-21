@@ -29,6 +29,30 @@ const Accordion = styled((props: AccordionProps) => (
     expanded: {},
 }));
 
+const MyAccordionSummary = styled(MuiAccordionSummary)({
+    fontSize: '14px',
+    color: '#5A4628',
+    backgroundColor: '#F9F5F0',
+    borderTop: '1px solid #D7D2C8',
+    minHeight: 20,
+    padding: '4px 16px',
+    '&.Mui-expanded': {
+        minHeight: 20,
+        margin: 0
+    },
+    '&.MuiAccordionSummary-expandIcon': {
+        color: '#5A4628',
+        padding: '5px',
+        margin: '0 -5px 0 0'
+    },
+    '&.MuiAccordionSummary-content': {
+        margin: 0,
+        '&.Mui-expanded': {
+            margin: 0
+        },
+    },
+})
+
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
     <MuiAccordionSummary expandIcon={<ExpandMore/>}{...props}/>))(() => ({
         fontSize: '14px',
@@ -37,20 +61,17 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
         borderTop: '1px solid #D7D2C8',
         minHeight: 20,
         padding: '4px 16px',
+        '& .MuiAccordionSummary-content': {
+            margin: 0,
+        },
         '&.Mui-expanded': {
             minHeight: 20,
-            margin: 0
+            margin: 0,
         },
-        '&.MuiAccordionSummary-expandIcon': {
+        '& .MuiAccordionSummary-expandIcon': {
             color: '#5A4628',
             padding: '5px',
             margin: '0 -5px 0 0'
-        },
-        '& .MuiAccordionSummary-content': {
-            margin: 0,
-            '&$Mui-expanded': {
-                margin: 0,
-            },
         },
 }));
 

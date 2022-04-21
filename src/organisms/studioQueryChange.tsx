@@ -13,8 +13,8 @@ export default function StudioQueryChange(props: {isWide: boolean}) {
     return (
         <div style={
             isWide ? {flexGrow: 1, marginRight: '20px'}
-                : isSmall ? {position: 'fixed', top: 132, marginLeft: -24, width: '100%', zIndex: 1100}
-                    : {position: 'fixed', top: 144, marginLeft: -24, width: '100%', zIndex: 1100}
+                : isSmall ? {position: 'fixed', top: 92, marginLeft: -24, width: '100%', zIndex: 1100}
+                    : {position: 'fixed', top: 100, marginLeft: -24, width: '100%', zIndex: 1100}
         }>
             <div style={isWide ? {position: 'sticky', top: 180} : {margin: '0 8px'}}>
                 <StudioQueryPaper isWide={isWide}/>

@@ -1,26 +1,6 @@
 import {useRouter} from 'next/router';
 import {prefItem} from "./itemsAndOptions/prefItems";
 import {lineItem} from "./itemsAndOptions/lineItems";
-import {useState} from "react";
-
-function unixToDate(props: {unix: string[], match: boolean}) {
-    const start = new Date(Number(props.unix[0]) * 1000);
-    const end = new Date(Number(props.unix[1]) * 1000);
-
-    const startTime: string|null =
-        !props.match && start.getHours() - 9 === 0 && start.getMinutes() === 0 ?
-            null : `${start.getHours() - 9}:${('0' + start.getMinutes()).slice(-2)}`;
-
-    const endTime: string|null =
-        props.match ?
-            end.getMinutes() === 59 ? '24:00' : `${end.getHours() - 9}:${('0' + end.getMinutes()).slice(-2)}`
-            :
-            end.getMinutes() === 59 ? null : `${end.getHours() - 9}:${('0' + end.getMinutes()).slice(-2)}`;
-
-    return (
-        {date: start, startTime: startTime, endTime: endTime, matchTime: props.match}
-    )
-}
 
 function getAsArray(value:string|string[]|undefined):string[] {
     if(Array.isArray(value)){
@@ -64,7 +44,6 @@ export const FromQuery = () => {
     const areaMax: number|null = getAsNumber(query.area_max);
     const peopleMin: number|null = getAsNumber(query.people_min);
     const peopleMax: number|null = getAsNumber(query.people_max);
-    const dateQuery: string = getAsString(query.date);
     const fromStation: number|null = getAsNumber(query.from_station_max);
     const priceMin: number|null = getAsNumber(query.price_min);
     const priceMax: number|null = getAsNumber(query.price_max);
@@ -78,13 +57,10 @@ export const FromQuery = () => {
     const floorMaterial: string[] = getAsArray(query.floor_material);
     const roomFacility: string[] = getAsArray(query.room_facility);
 
-
     const prefecture: {name: string, id: string}[] = [];
     const city: {name: string, id: string}[] = [];
     const line: {name: string, id: string}[] = [];
     const station: {name: string, id: string}[] = [];
-    const date: {date: Date, startTime: string|null, endTime: string|null, matchTime: boolean}[] = [];
-    const dateMatch: boolean = dateQuery.includes(' ');
 
     prefItem.map((item) =>
         prefectureQuery && prefectureQuery.map((id) => id === item.pref.id).includes(true) ?
@@ -106,15 +82,11 @@ export const FromQuery = () => {
 
     );
 
-    dateQuery !== '' && dateQuery.split(/,|\s/).map((item) =>
-        date.push(unixToDate({unix: item.split(/and|or/), match: item.includes('and')}))
-    );
-
     return (
         {
             prefecture: prefecture, city: city, line: line, station: station, studioName: studioName,
             areaMin: areaMin, areaMax: areaMax, peopleMin: peopleMin, peopleMax: peopleMax,
-            date: date, dateMatch: dateMatch, fromStation: fromStation, priceMin: priceMin, priceMax: priceMax,
+            fromStation: fromStation, priceMin: priceMin, priceMax: priceMax,
             freeCancel: freeCancel, halfHourSlot: halfHourSlot, fromHalfHour: fromHalfHour,
             reservation: reservation, studioFacility: studioFacility,
             mirrorMin: mirrorMin, mirrorMax: mirrorMax, floorMaterial: floorMaterial, roomFacility: roomFacility

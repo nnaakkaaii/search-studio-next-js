@@ -1,22 +1,10 @@
 import {selector} from "recoil";
 import {
-    areaChipState, cityChipState, dateChipState, dateMatchState, detailItemChipState, floorMaterialChipState,
+    areaChipState, cityChipState, detailItemChipState, floorMaterialChipState,
     fromStationChipState, lineChipState, mirrorChipState, peopleChipState, prefectureChipState, priceChipState,
     reservationChipState, roomFacilityChipState, stationChipState, studioFacilityChipState, studioNameState
 } from "../atom";
 import {reserveOptions} from "../itemsAndOptions/detailOptions";
-import {endTimeOptions} from "../itemsAndOptions/timeOptions";
-
-function dateConvert (date: {date: Date|null, startTime: string|null, endTime: string|null, matchTime: boolean}) {
-    const startHour = date.startTime ? date.startTime.split(':')[0] : 0 ;
-    const startMin = date.startTime ? date.startTime.split(':')[1] : 0 ;
-    const endHour = (date.endTime && endTimeOptions.indexOf(date.endTime) !== 48) ? date.endTime.split(':')[0] : 23 ;
-    const endMin = (date.endTime && endTimeOptions.indexOf(date.endTime) !== 48) ? date.endTime.split(':')[1] : 59 ;
-    const unixStart =  date.date && Date.UTC(date.date.getFullYear(), date.date.getMonth(), date.date.getDate(), Number(startHour), Number(startMin))/1000
-    const unixEnd =  date.date && Date.UTC(date.date.getFullYear(), date.date.getMonth(), date.date.getDate(), Number(endHour), Number(endMin))/1000
-
-    return date.date && `${unixStart}${date.matchTime ? 'and' : 'or'}${unixEnd}`
-}
 
 export const queryState = selector({
     key: 'queryState',
@@ -28,8 +16,6 @@ export const queryState = selector({
         const studioName = get(studioNameState);
         const area = get(areaChipState);
         const people = get(peopleChipState);
-        const date = get(dateChipState).map((date) => dateConvert(date));
-        const dateMatch = get(dateMatchState);
         const fromStation = get(fromStationChipState);
         const price = get(priceChipState);
         const mirror = get(mirrorChipState);
@@ -53,7 +39,6 @@ export const queryState = selector({
         area.max && query.push(`area_max=${area.max}`)
         people.min && query.push(`people_min=${people.min}`)
         people.max && query.push(`people_max=${people.max}`)
-        date.length > 0 && (dateMatch ? query.push(`date=${date.join(' ')}`) : query.push(`date=${date}`))
         fromStation && query.push(`from_station_max=${fromStation}`)
         detailItem.includes('キャンセル無料期間あり') && query.push(`free_cancel=true`)
         price.min && query.push(`price_min=${price.min}`)

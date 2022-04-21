@@ -6,11 +6,11 @@ import BoldTypography from "../../atoms/boldTypography";
 import StudioResultCard from "../../organisms/studioResultCard";
 import React, {useEffect, useState} from "react";
 import {useMedia} from "use-media";
-import {initialSearchResult, SearchResult} from "../../seachResultType";
+import {initialSearchResult} from "../../seachResultType";
 import {useSetRecoilState} from "recoil";
 import {
     areaChipState,
-    cityChipState, dateChipState, dateMatchState, detailItemChipState, fromStationChipState,
+    cityChipState, detailItemChipState, fromStationChipState,
     lineChipState, mirrorChipState, peopleChipState,
     prefectureChipState, priceChipState,
     stationChipState, studioNameState,
@@ -35,8 +35,6 @@ export default function Home() {
     const setStudioName = useSetRecoilState(studioNameState);
     const setAreaChip = useSetRecoilState(areaChipState);
     const setPeopleChip = useSetRecoilState(peopleChipState);
-    const setDateChip = useSetRecoilState(dateChipState);
-    const setDateMatch = useSetRecoilState(dateMatchState);
     const setFromStationChip = useSetRecoilState(fromStationChipState);
     const setPriceChip = useSetRecoilState(priceChipState);
     const setMirrorChip = useSetRecoilState(mirrorChipState);
@@ -64,8 +62,6 @@ export default function Home() {
         setStudioName(query.studioName);
         setAreaChip({min: query.areaMin, max: query.areaMax});
         setPeopleChip({min: query.peopleMin, max: query.peopleMax});
-        setDateChip(query.date);
-        setDateMatch(query.dateMatch);
         setFromStationChip(query.fromStation);
         setPriceChip({min: query.priceMin, max: query.priceMax});
         setMirrorChip({min:  query.mirrorMin, max: query.mirrorMax});
@@ -78,10 +74,10 @@ export default function Home() {
     return (
         <Studio>
             <StudioBreadcrumbs crumbs={[{label: '検索結果一覧'}]}/>
-            <div style={isWide ? {display: 'flex', padding: '0 36px 24px'} : {padding: '8px 24px 24px'}}>
+            <div style={isWide ? {display: 'flex', padding: '24px 36px'} : {padding: '24px'}}>
                     <StudioQueryChange isWide={isWide}/>
                     <div style={isWide ? {flexGrow: 3} : {}}>
-                        <PageTitle margin={isWide ? '12px 0 0' : '36px 0 0'} center>検索結果</PageTitle>
+                        <PageTitle margin={'56px 0 0'} center>検索結果</PageTitle>
                         <BoldTypography sub center>全{searchResult.total_pages}件</BoldTypography>
                         {
                             searchResult.studios.map((studio, index) =>

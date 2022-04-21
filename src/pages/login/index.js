@@ -12,6 +12,7 @@ import {loginState} from "../../atom";
 import {useSetRecoilState} from "recoil";
 import LoginForm from "../../organisms/loginForm";
 import RegisterForm from "../../organisms/registerForm";
+import PageTitle from "../../atoms/pageTitle";
 
 const MyPaper = styled(Paper)({
     color: "#5A4628",
@@ -21,7 +22,7 @@ const MyPaper = styled(Paper)({
 
 export default function Home() {
     const router = useRouter();
-    const isWide = useMedia({ minWidth: "620px" });
+    const isWide = useMedia({ minWidth: "600px" });
     const setLogin = useSetRecoilState(loginState);
 
     const { handleSubmit, control } = useForm({
@@ -37,12 +38,15 @@ export default function Home() {
 
     return (
         <Studio loginPage>
-            <MyPaper elevation={0} sx={isWide ? {maxWidth: '600px', m: '32px auto 0'} : {}}>
-                <BoldTypography>アカウントをお持ちの方</BoldTypography>
-                <LoginForm/>
-                <BoldTypography margin={'12px 0 0'}>アカウントをお持ちでない方</BoldTypography>
-                <RegisterForm/>
-            </MyPaper>
+            <div style={isWide ? {padding: 32} : {padding: 24}}>
+                <PageTitle　margin={'16px 0'} center>ログイン</PageTitle>
+                <MyPaper elevation={0} sx={isWide ? {maxWidth: '600px', m: '0 auto'} : {m: 0}}>
+                    <BoldTypography>アカウントをお持ちの方</BoldTypography>
+                    <LoginForm/>
+                    <BoldTypography margin={'12px 0 0'}>アカウントをお持ちでない方</BoldTypography>
+                    <RegisterForm/>
+                </MyPaper>
+            </div>
         </Studio>
     )
 }

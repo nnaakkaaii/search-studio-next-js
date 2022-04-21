@@ -3,7 +3,6 @@ import RangeLabel from "../rangeLabel";
 import {reserveOptions} from "../itemsAndOptions/detailOptions";
 import {FromQuery} from "../fromQuery";
 import SearchChip from "../atoms/searchChip";
-import DateConvert from "../dateConvert";
 import {styled} from "@mui/system";
 
 const ChipWrapper = styled('div')({
@@ -24,12 +23,6 @@ export default function StudioQueryChip() {
             <SearchChip label={query.studioName}/>
             <SearchChip label={RangeLabel({min: query.areaMin, max: query.areaMax, unit: 'm²'})}/>
             <SearchChip label={RangeLabel({min: query.peopleMin, max: query.peopleMax, unit: '人'})}/>
-            {
-                query.date.map((item, index) =>
-                    item && <SearchChip key={index} label={DateConvert(item.date)}
-                                        after={RangeLabel({min: item.startTime, max: item.endTime})}/>
-                )
-            }
             <SearchChip pre={'駅'} label={query.fromStation} after={'分以内'}/>
             {query.freeCancel && <SearchChip label={'キャンセル無料期間あり'}/>}
             <SearchChip label={RangeLabel({min: query.priceMin, max: query.priceMax, unit: '円'})}/>

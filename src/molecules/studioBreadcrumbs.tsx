@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import {styled} from "@mui/system";
 import {Breadcrumbs} from "@mui/material";
+import {useMedia} from "use-media";
 
 const BreadWrapper = styled('div')({
-    position: 'sticky',
-    top: 108,
+    position: 'fixed',
     zIndex: 5000,
 })
 
@@ -17,9 +17,10 @@ interface StudioBreadcrumbsProps {
 }
 
 export default function StudioBreadcrumbs(props: StudioBreadcrumbsProps) {
+    const isWide = useMedia({ minWidth: "600px" });
 
     return (
-            <BreadWrapper>
+            <BreadWrapper sx={isWide ? {top: 64} : {top: 56}}>
                 <Breadcrumbs sx={{fontSize: 12, m: '8px'}} aria-label="breadcrumb">
                     <Link href={'/'}>スタジオ検索トップ</Link>
                     {

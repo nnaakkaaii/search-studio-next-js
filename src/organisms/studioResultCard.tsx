@@ -10,7 +10,6 @@ import SlotTime from "../molecules/slotTime";
 import SmallTypography from "../atoms/smallTypography";
 import {styled} from "@mui/system";
 import {Card, CardActionArea, CardContent} from "@mui/material";
-import Image from "next/image";
 
 const MyCardContent = styled(CardContent)({
     color: "#5A4628",

@@ -33,7 +33,7 @@ export default function StudioDetail(props: {isWide?: boolean}) {
     };
 
     return (
-        <div style={isWide ? {display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between'} : {}}>
+        <div style={isWide ? {width: '50%', marginTop: '24px'} : {}}>
             <StudioDetailChip/>
             <div style={{textAlign: 'right', minWidth: 140}}>
                 <MoreDetailButton onClick={detailDialogOpen}/>

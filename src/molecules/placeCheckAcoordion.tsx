@@ -36,10 +36,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
         margin: '0 -5px 0 0'
     },
     '& .MuiAccordionSummary-content': {
-        margin: 0,
-        '&$expanded': {
-            margin: 0
-        }
+        margin: 0
     },
 }));
 

@@ -18,8 +18,7 @@ import {useWindowSize} from "react-use";
 import {styled} from "@mui/system";
 
 const TitleWrapper = styled('div')({
-    position: 'sticky',
-    top: 128,
+    position: 'fixed',
     zIndex: 1000
 })
 
@@ -29,6 +28,7 @@ export default function Home() {
         variables: {},
     });
     const [studio, setStudio] = useState(initialStudio);
+    const isHeaderWide = useMedia({ minWidth: "600px" });
     const isWide = useMedia({ minWidth: "800px" });
     const [imgTop, setImgTop] = useState(80-107)
     const [barTop, setBarTop] = useState(75+107)
@@ -59,13 +59,13 @@ export default function Home() {
         <Studio>
             <>
                 <StudioBreadcrumbs crumbs={[{label: '検索結果一覧', link: `/studios/${search.substring(9 + studio.studio_id.length)}`}, {label: 'studio_name'}]}/>
-                <TitleWrapper>
-                    <PageTitle margin={'4px 8px'}>studio_name{studio.studio_name}</PageTitle>
+                <TitleWrapper sx={isHeaderWide ? {top: 92} : {top: 84}}>
+                    <PageTitle margin={ '0 8px'}>studio_name{studio.studio_name}</PageTitle>
                 </TitleWrapper>
                 {
                     isWide ?
-                        <div style={{display: 'flex'}}>
-                            <div style={{flexGrow: 1, overflow: 'scroll', height: height - 184}}>
+                        <div style={{display: 'flex', padding: '60px 12px 12px'}}>
+                            <div style={{flexGrow: 1, overflow: 'scroll', height: height - 140}}>
                                 <ImgCarousel img={studio.studio_img}/>
                                 <StudioInformation/>
                             </div>
@@ -73,7 +73,7 @@ export default function Home() {
                         </div>
 
                         :
-                        <>
+                        <div style={{paddingTop: '60px'}}>
                             <div style={{marginBottom: 10, position: 'sticky', top: imgTop, zIndex: 100}}>
                                 <ImgCarousel img={studio.studio_img}/>
                             </div>
@@ -81,7 +81,7 @@ export default function Home() {
                                 {studio.rooms.map((room, index) => <VacantRoom room={room} key={index}/>)}
                                 <StudioInformation/>
                             </StudioMenuTab>
-                        </>
+                        </div>
                 }
             </>
         </Studio>

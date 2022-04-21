@@ -6,7 +6,7 @@ import {useMedia} from "use-media";
 import {useSetRecoilState} from "recoil";
 import {
     areaChipState,
-    cityChipState, dateChipState, detailItemChipState, fromStationChipState,
+    cityChipState, detailItemChipState, fromStationChipState,
     lineChipState, mirrorChipState, peopleChipState,
     prefectureChipState, priceChipState,
     stationChipState,
@@ -14,7 +14,7 @@ import {
 } from "../atom";
 
 export default function Home() {
-    const isWide = useMedia({ minWidth: "620px" });
+    const isWide = useMedia({ minWidth: "600px" });
     const setPrefectureChip = useSetRecoilState(prefectureChipState);
     const setCityChip = useSetRecoilState(cityChipState);
     const setLineChip = useSetRecoilState(lineChipState);
@@ -22,7 +22,6 @@ export default function Home() {
     const setStudioName = useSetRecoilState(studioNameState);
     const setAreaChip = useSetRecoilState(areaChipState);
     const setPeopleChip = useSetRecoilState(peopleChipState);
-    const setDateChip = useSetRecoilState(dateChipState);
     const setFromStationChip = useSetRecoilState(fromStationChipState);
     const setPriceChip = useSetRecoilState(priceChipState);
     const setMirrorChip = useSetRecoilState(mirrorChipState);
@@ -36,7 +35,6 @@ export default function Home() {
         setStudioName('');
         setAreaChip({min: null, max: null});
         setPeopleChip({min: null, max: null});
-        setDateChip([]);
         setFromStationChip(null);
         setPriceChip({min: null, max: null});
         setMirrorChip({min: null, max: null});
@@ -45,7 +43,7 @@ export default function Home() {
 
     return (
         <Studio>
-            <div style={isWide ? {padding: 32} : {padding: 24}}>
+            <div style={{padding: isWide ? 32 : 24}}>
                 <PageTitle margin={'16px 0'} center>スタジオを検索</PageTitle>
                 <StudioSearchPaper isWide={isWide}/>
             </div>

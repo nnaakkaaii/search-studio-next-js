@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import StudioQueryChip from "../molecules/studioQueryChip";
 import OutlineButton from "../atoms/outlineButton";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {dateOpenState, detailOpenState, placeOpenState, spaceOpenState, studioSearchPaperOpenState} from "../atom";
+import {detailOpenState, placeOpenState, spaceOpenState, studioSearchPaperOpenState} from "../atom";
 import BoldTypography from "../atoms/boldTypography";
 import {MyBlueButton} from "../atoms/blueButton";
 import {styled} from "@mui/system";
@@ -25,11 +25,10 @@ export default function StudioQueryPaper(props: {isWide?: boolean}) {
     const [open, setOpen] = useRecoilState(studioSearchPaperOpenState);
     const placeOpen = useRecoilValue(placeOpenState);
     const spaceOpen = useRecoilValue(spaceOpenState);
-    const dateOpen = useRecoilValue(dateOpenState);
     const detailOpen = useRecoilValue(detailOpenState);
 
     useEffect(() => {
-        if (placeOpen || spaceOpen || dateOpen || detailOpen) {
+        if (placeOpen || spaceOpen || detailOpen) {
             setOpen(true)
         } else {
             setOpen(false)
